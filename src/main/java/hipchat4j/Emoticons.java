@@ -1,7 +1,9 @@
 package hipchat4j;
 
 import hipchat4j.connector.Connector;
+import hipchat4j.connector.ConnectorAbstract;
 import hipchat4j.entities.Emoticon;
+import hipchat4j.json.JsonParser;
 
 import java.util.List;
 
@@ -11,20 +13,23 @@ import java.util.List;
  */
 public class Emoticons {
 
+    private final ConnectorAbstract connector;
 
-    public static Emoticon getEmoticon(int id, Connector c)
+    public Emoticons(ConnectorAbstract c)
     {
-        return null;
-    }
-
-    public static Emoticon getEmoticon(int id)
-    {
-        return getEmoticon(0, null);
+        connector = c;
     }
 
 
-    public static List<Emoticon> getEmoticons()
+    public Emoticon getEmoticon(int id)
     {
+        String jsonback = connector.get("/v2/emoticon/" + id);
+        return JsonParser.getInstance().fromJson(jsonback, Emoticon.class);
+    }
+
+    public List<Emoticon> getEmoticons()
+    {
+      String jsonback = connector.get("/v2/emoticon");
         return null;
     }
 
