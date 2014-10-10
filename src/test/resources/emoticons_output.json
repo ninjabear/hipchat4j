@@ -802,8 +802,8 @@
       }
    ],
    "links":{  
-      "next":"https://api.hipchat.com/v2/emoticon?start-index=100&max-results=100",
-      "self":"https://api.hipchat.com/v2/emoticon"
+      "next":"/v2/emoticon?start-index=100&max-results=100",
+      "self":"/v2/emoticon"
    },
    "maxResults":100,
    "startIndex":0

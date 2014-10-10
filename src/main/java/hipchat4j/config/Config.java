@@ -1,7 +1,5 @@
 package hipchat4j.config;
 
-import hipchat4j.connector.Connector;
-
 /**
  * hipchat4j
  * 09/10/14/21:22

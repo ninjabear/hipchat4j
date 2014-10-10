@@ -2,7 +2,6 @@ package hipchat4j.connector;
 
 import hipchat4j.config.Config;
 
-import java.net.URL;
 import java.util.Map;
 
 /**

@@ -1,6 +1,6 @@
 package hipchat4j.entities;
 
-import org.apache.commons.io.IOUtils;
+import hipchat4j.json.JsonParser;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,7 +15,6 @@ public class EmoticonTest {
     public void setUp() throws Exception {
         e=new Emoticon(123, "keyorid", "ashortcut", 500, 900, "audiopath");
         eNoAudio=new Emoticon(123, "keyorid", "ashortcut", 500, 900);
-        sampleJson = IOUtils.toString(this.getClass().getResourceAsStream("/emoticons_output.json"));
     }
 
     @Test
@@ -30,12 +29,12 @@ public class EmoticonTest {
 
     @Test
     public void testGetWidth() throws Exception {
-        assertEquals(500, e.getWidth());
+        assertEquals(500, e.getWidth().longValue() );
     }
 
     @Test
     public void testGetHeight() throws Exception {
-        assertEquals(900, e.getHeight());
+        assertEquals(900, e.getHeight().longValue());
     }
 
     @Test
@@ -52,7 +51,10 @@ public class EmoticonTest {
     @Test
     public void testFromJson() throws Exception
     {
+        String eAsJson = JsonParser.getInstance().toJson(e);
+        Emoticon fromJson = JsonParser.getInstance().fromJson(eAsJson, Emoticon.class);
 
+        assertTrue("original doesn't match parsed", e.equals(fromJson));
     }
 
 }

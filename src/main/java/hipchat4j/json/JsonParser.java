@@ -2,8 +2,6 @@ package hipchat4j.json;
 
 import com.google.gson.Gson;
 
-import java.util.Objects;
-
 /**
  * hipchat4j
  * 09/10/14/23:06
