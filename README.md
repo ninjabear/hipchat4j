@@ -1,4 +1,4 @@
 hipchat4j
 =========
 
-HipChat plugin for Java
+HipChat library for Java
