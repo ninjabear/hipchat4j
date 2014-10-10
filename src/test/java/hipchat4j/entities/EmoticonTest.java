@@ -45,4 +45,8 @@ public class EmoticonTest {
         assertNull(eNoAudio.getAudioPath());
         assertEquals("audiopath", e.getAudioPath());
     }
+
+    @Test
+    public void testFromJson() throws Exception
+
 }

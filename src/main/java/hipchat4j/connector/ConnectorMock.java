@@ -40,7 +40,7 @@ public class ConnectorMock extends ConnectorAbstract {
             return "";
         } else {
             Map<String,String> resp = getresponsemap.get(requestPath);
-            if (resp.get(CODE_KEY)!="200")
+            if (!resp.get(CODE_KEY).equals("200"))
             {
                 throw new IllegalStateException("couldn't get result - http response " + resp.get(CODE_KEY));
             }

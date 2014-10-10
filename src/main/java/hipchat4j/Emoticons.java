@@ -3,6 +3,7 @@ package hipchat4j;
 import hipchat4j.connector.Connector;
 import hipchat4j.connector.ConnectorAbstract;
 import hipchat4j.entities.Emoticon;
+import hipchat4j.entities.EmoticonListPage;
 import hipchat4j.json.JsonParser;
 
 import java.util.List;
@@ -30,7 +31,8 @@ public class Emoticons {
     public List<Emoticon> getEmoticons()
     {
       String jsonback = connector.get("/v2/emoticon");
-        return null;
+      EmoticonListPage p = JsonParser.getInstance().fromJson(jsonback, EmoticonListPage.class);
+      return null;
     }
 
 }
