@@ -4,8 +4,10 @@ import hipchat4j.config.Config;
 import hipchat4j.connector.ConnectorMock;
 import hipchat4j.entities.Emoticon;
 import hipchat4j.json.JsonParser;
+import org.apache.commons.io.IOUtils;
 import org.junit.Before;
 import org.junit.Test;
+import sun.nio.ch.IOUtil;
 
 import java.util.List;
 
@@ -25,7 +27,9 @@ public class EmoticonsTest {
         emoticons = new Emoticons(cm);
         resp = new Emoticon(123, "123", "ashortcut",800, 600);
         String jsonresp = JsonParser.getInstance().toJson(resp);
+
         cm.addGetResponseMapping("/v2/emoticon/123", "200", jsonresp );
+        cm.addGetResponseMapping("/v2/emoticon", "200", IOUtils.toString(this.getClass().getResourceAsStream("/emoticons_output.json")));
     }
 
     @Test

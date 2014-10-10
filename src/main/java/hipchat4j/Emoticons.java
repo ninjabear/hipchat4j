@@ -6,6 +6,7 @@ import hipchat4j.entities.Emoticon;
 import hipchat4j.entities.EmoticonListPage;
 import hipchat4j.json.JsonParser;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,23 +17,33 @@ public class Emoticons {
 
     private final ConnectorAbstract connector;
 
-    public Emoticons(ConnectorAbstract c)
-    {
+    public Emoticons(ConnectorAbstract c) {
         connector = c;
     }
 
 
-    public Emoticon getEmoticon(int id)
-    {
+    public Emoticon getEmoticon(int id) {
         String jsonback = connector.get("/v2/emoticon/" + id);
         return JsonParser.getInstance().fromJson(jsonback, Emoticon.class);
     }
 
-    public List<Emoticon> getEmoticons()
+    public List<Emoticon> getEmoticons() {
+        String jsonback = connector.get("/v2/emoticon");
+        List<Emoticon> emoticons = new ArrayList<>();
+        EmoticonListPage p = JsonParser.getInstance().fromJson(jsonback, EmoticonListPage.class);
+
+        while (p.getLinks().getNext() != null) {
+            emoticons.addAll(parsePageForEmoticons(p));
+            String nextPageJson = connector.get(p.getLinks().getNext());
+            p = JsonParser.getInstance().fromJson(nextPageJson, EmoticonListPage.class);
+        }
+
+        return emoticons;
+    }
+
+    private static List<Emoticon> parsePageForEmoticons(EmoticonListPage page)
     {
-      String jsonback = connector.get("/v2/emoticon");
-      EmoticonListPage p = JsonParser.getInstance().fromJson(jsonback, EmoticonListPage.class);
-      return null;
+        return new ArrayList<>();
     }
 
 }

@@ -1,5 +1,6 @@
 package hipchat4j.entities;
 
+import org.apache.commons.io.IOUtils;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -8,11 +9,13 @@ import static org.junit.Assert.*;
 public class EmoticonTest {
 
     private Emoticon e,eNoAudio;
+    private String sampleJson;
 
     @Before
     public void setUp() throws Exception {
         e=new Emoticon(123, "keyorid", "ashortcut", 500, 900, "audiopath");
         eNoAudio=new Emoticon(123, "keyorid", "ashortcut", 500, 900);
+        sampleJson = IOUtils.toString(this.getClass().getResourceAsStream("/emoticons_output.json"));
     }
 
     @Test
@@ -48,5 +51,8 @@ public class EmoticonTest {
 
     @Test
     public void testFromJson() throws Exception
+    {
+
+    }
 
 }
