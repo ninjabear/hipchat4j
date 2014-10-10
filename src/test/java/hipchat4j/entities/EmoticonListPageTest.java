@@ -33,9 +33,10 @@ public class EmoticonListPageTest {
     @Test
     public void toJsonSample() throws  Exception {
 
-        ArrayList<Item> a = new ArrayList<>();
-        a.add(new Item(123, new Link("self", "", ""), "shortcut", "url"));
-        EmoticonListPage elp = new EmoticonListPage(a, 0, 100, new Link("self","prev", "next"));
+        ArrayList<EmoticonListPage.Item> a = new ArrayList<>();
+        a.add(new EmoticonListPage.Item(123, new EmoticonListPage.Link("self", "", ""), "shortcut", "url"));
+
+        EmoticonListPage elp = new EmoticonListPage(a, 0, 100, new EmoticonListPage.Link("self","prev", "next"));
         String jsonout = JsonParser.getInstance().toJson(elp);
         EmoticonListPage back = JsonParser.getInstance().fromJson(jsonout, EmoticonListPage.class);
 

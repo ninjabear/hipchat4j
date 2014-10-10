@@ -10,6 +10,12 @@ import java.util.Map;
  */
 public abstract class ConnectorAbstract {
 
+    /**
+     * TODO
+     * simulate different reasons for failure and create the exceptions that accompany them
+     * https://www.hipchat.com/docs/apiv2/response_codes
+     */
+
     protected final Config config;
 
     public ConnectorAbstract(Config config)

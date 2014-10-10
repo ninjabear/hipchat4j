@@ -3,7 +3,6 @@ package hipchat4j;
 import hipchat4j.connector.ConnectorAbstract;
 import hipchat4j.entities.Emoticon;
 import hipchat4j.entities.EmoticonListPage;
-import hipchat4j.entities.Item;
 import hipchat4j.json.JsonParser;
 
 import java.util.ArrayList;
@@ -45,7 +44,7 @@ public class Emoticons {
     {
         final List<Emoticon> acc = new ArrayList<>();
         //(int id, String keyOrId, String shortcut, int width,  int height, String audioPath)
-        for (Item i : page.getItems())
+        for (EmoticonListPage.Item i : page.getItems())
         {
             Emoticon e = new Emoticon(i.getId(),
                     Integer.toString(i.getId()),

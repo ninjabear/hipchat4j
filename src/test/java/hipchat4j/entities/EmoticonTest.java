@@ -9,7 +9,6 @@ import static org.junit.Assert.*;
 public class EmoticonTest {
 
     private Emoticon e,eNoAudio;
-    private String sampleJson;
 
     @Before
     public void setUp() throws Exception {

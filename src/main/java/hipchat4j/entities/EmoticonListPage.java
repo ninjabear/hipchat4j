@@ -19,6 +19,71 @@ public class EmoticonListPage {
     @SerializedName("startIndex")
     private int startIndex;
 
+    public static class Item {
+
+        @SerializedName("id")
+        private int id;
+        @SerializedName("links")
+        private Link links;
+        @SerializedName("shortcut")
+        private String shortcut;
+        @SerializedName("url")
+        private String url;
+
+
+        public Item(int id, Link links, String shortcut, String url) {
+            this.id = id;
+            this.links = links;
+            this.shortcut = shortcut;
+            this.url = url;
+        }
+
+        public String getUrl() {
+            return url;
+        }
+
+        public Link getLinks() {
+            return links;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public String getShortcut() {
+            return shortcut;
+        }
+
+    }
+
+    public static class Link {
+
+        @SerializedName("self")
+        private String self = "";
+        @SerializedName("prev")
+        private String prev = "";
+        @SerializedName("next")
+        private String next = "";
+
+        public Link(String self, String prev, String next) {
+            this.self = self;
+            this.prev = prev;
+            this.next = next;
+        }
+
+        public String getSelf() {
+            return self;
+        }
+
+        public String getPrev() {
+            return prev;
+        }
+
+        public String getNext() {
+            return next;
+        }
+    }
+
 
     public EmoticonListPage(List<Item> items, int startIndex, int maxResults, Link links) {
         this.items = items;
