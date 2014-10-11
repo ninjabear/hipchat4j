@@ -100,6 +100,20 @@ public class ServerCapability {
 
         public class HipchatApiProvider {
             private String url="";
+
+            /*
+             * admin_group - Perform group administrative tasks
+             * admin_room - Perform room administrative tasks
+             * manage_rooms - Create, update, and remove rooms
+             * send_message - Send private one-on-one messages
+             * send_notification - Send room notifications
+             * view_group - View users, rooms, and other group information
+             * view_messages - View messages from chat rooms and private chats you have access to
+             *
+             * these scopes can be these
+             * https://www.hipchat.com/docs/apiv2/auth
+             */
+
            // private String availableScopes="";// this isn't right
 
             public String getUrl() {
