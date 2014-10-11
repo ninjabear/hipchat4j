@@ -27,6 +27,7 @@ public class ServerCapability {
     public class Links {
         private String self="";
         private String homepage;
+        private String api; // undocumented
 
         public String getSelf() {
             return self;
@@ -34,6 +35,10 @@ public class ServerCapability {
 
         public String getHomepage() {
             return homepage;
+        }
+
+        public String getApi() {
+            return api;
         }
     }
 
@@ -95,15 +100,15 @@ public class ServerCapability {
 
         public class HipchatApiProvider {
             private String url="";
-            private String availableScopes="";// this isn't right
+           // private String availableScopes="";// this isn't right
 
             public String getUrl() {
                 return url;
             }
 
-            public String getAvailableScopes() {
+           /* public String getAvailableScopes() {
                 return availableScopes;
-            }
+            }*/
         }
 
         public class Configurable {
@@ -168,14 +173,14 @@ public class ServerCapability {
             }
         }
 
-        private OAuth2Provider oauth2Provider;
-        private OpenIdProvider openIdProvider;
-        private List<Webhook> webhook;
-        private HipchatApiProvider hipchatApiProvider;
-        private Configurable configurable;
-        private OAuth2Consumer oauth2Consumer;
-        private HipchatApiConsumer hipchatApiConsumer;
-        private Installable installable;
+        private OAuth2Provider oauth2Provider = new OAuth2Provider();
+        private OpenIdProvider openIdProvider = new OpenIdProvider();
+        private List<Webhook> webhook = new ArrayList<>();
+        private HipchatApiProvider hipchatApiProvider = new HipchatApiProvider();
+        private Configurable configurable = new Configurable();
+        private OAuth2Consumer oauth2Consumer = new OAuth2Consumer();
+        private HipchatApiConsumer hipchatApiConsumer = new HipchatApiConsumer();
+        private Installable installable = new Installable();
 
         public OAuth2Provider getOauth2Provider() {
             return oauth2Provider;
@@ -210,10 +215,10 @@ public class ServerCapability {
         }
     }
 
-    private Vendor vendor;
+    private Vendor vendor = new Vendor();
     private String name = "";
     private Links links = new Links();
-    private CapabilitiesList capabilities;
+    private CapabilitiesList capabilities = new CapabilitiesList();
     private String key="";
     private String description="";
 

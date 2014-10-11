@@ -26,6 +26,8 @@ public class ServerCapabilityTest {
     public void testGetVendor() throws Exception {
         ServerCapability.Vendor v = capabilityFromHipchatMain.getVendor();
         assertNotNull(v);
+
+        //fail (JsonParser.getInstance().toJson(new ServerCapability()));
     }
 
     @Test
