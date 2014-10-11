@@ -2,6 +2,7 @@ package hipchat4j.entities;
 
 import hipchat4j.Capabilities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,8 +12,8 @@ import java.util.List;
 public class ServerCapability {
 
     public class Vendor {
-        private String url;
-        private String name;
+        private String url="";
+        private String name="";
 
         public String getUrl() {
             return url;
@@ -24,7 +25,7 @@ public class ServerCapability {
     }
 
     public class Links {
-        private String self;
+        private String self="";
         private String homepage;
 
         public String getSelf() {
@@ -52,7 +53,7 @@ public class ServerCapability {
         }
 
         public class OpenIdProvider {
-            private String url;
+            private String url="";
             private String logoutUrl;
             private String name;
 
@@ -70,9 +71,9 @@ public class ServerCapability {
         }
 
         public class Webhook {
-            private String url;
+            private String url="";
             private String pattern;
-            private String event;
+            private String event="";
             private String name;
 
             public String getUrl() {
@@ -93,8 +94,8 @@ public class ServerCapability {
         }
 
         public class HipchatApiProvider {
-            private String url;
-            private String availableScopes;
+            private String url="";
+            private String availableScopes="";// this isn't right
 
             public String getUrl() {
                 return url;
@@ -106,7 +107,7 @@ public class ServerCapability {
         }
 
         public class Configurable {
-            private String url;
+            private String url="";
             private boolean allowAccessToRoomAdmins;
 
             public String getUrl() {
@@ -119,7 +120,7 @@ public class ServerCapability {
         }
 
         public class OAuth2Consumer {
-            private List<String> redirectionUrls;
+            private List<String> redirectionUrls = new ArrayList<>();
 
             public List<String> getRedirectionUrls() {
                 return redirectionUrls;
@@ -127,7 +128,7 @@ public class ServerCapability {
         }
 
         public class HipchatApiConsumer {
-            private List<String> scopes;
+            private List<String> scopes = new ArrayList<>();
             private String fromName;
 
             public List<String> getScopes() {
@@ -210,11 +211,11 @@ public class ServerCapability {
     }
 
     private Vendor vendor;
-    private String name;
-    private Links links;
+    private String name = "";
+    private Links links = new Links();
     private CapabilitiesList capabilities;
-    private String key;
-    private String description;
+    private String key="";
+    private String description="";
 
     public Vendor getVendor() {
         return vendor;
