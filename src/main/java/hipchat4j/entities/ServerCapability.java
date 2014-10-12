@@ -4,6 +4,7 @@ import hipchat4j.Capabilities;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * hipchat4j
@@ -27,7 +28,7 @@ public class ServerCapability {
     public class Links {
         private String self="";
         private String homepage;
-        private String api; // undocumented
+        private String api; // undocumented but returned by hipchat.com
 
         public String getSelf() {
             return self;
@@ -99,9 +100,11 @@ public class ServerCapability {
         }
 
         public class HipchatApiProvider {
-            private String url="";
 
             /*
+             * Scopes aren't well covered in the Capabilities API page
+             * but I found below on the auth page
+             *
              * admin_group - Perform group administrative tasks
              * admin_room - Perform room administrative tasks
              * manage_rooms - Create, update, and remove rooms
@@ -114,15 +117,35 @@ public class ServerCapability {
              * https://www.hipchat.com/docs/apiv2/auth
              */
 
-           // private String availableScopes="";// this isn't right
+            public class Scope {
+
+                private String description;
+                private String id;
+                private String name;
+
+                public String getDescription() {
+                    return description;
+                }
+
+                public String getId() {
+                    return id;
+                }
+
+                public String getName() {
+                    return name;
+                }
+            }
+
+            private Map<String, Scope> availableScopes;
+            private String url="";
 
             public String getUrl() {
                 return url;
             }
 
-           /* public String getAvailableScopes() {
+            public Map<String, Scope> getAvailableScopes() {
                 return availableScopes;
-            }*/
+            }
         }
 
         public class Configurable {
