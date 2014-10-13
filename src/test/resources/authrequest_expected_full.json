@@ -1,0 +1,9 @@
+{
+   "username":"ausername",
+   "grant_type":"authorization_code",
+   "code":"acode",
+   "redirect_uri":"http://somewhere.com/?",
+   "scope":"a scope here",
+   "password":"sexorgod",
+   "refresh_token":"arefreshtoken"
+}

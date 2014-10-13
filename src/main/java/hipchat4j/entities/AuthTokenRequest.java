@@ -36,6 +36,38 @@ public class AuthTokenRequest {
         if (list==null||list.size()==0)
             return null;
 
+        if (list.contains(null))
+            throw new IllegalArgumentException("list cannot contain null");
+
         return String.join(" ", list);
     }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getGrantType() {
+        return grantType;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public String getRedirectUri() {
+        return redirectUri;
+    }
+
+    public String getScope() {
+        return scope;
+    }
+
+    public String getRefreshToken() {
+        return refreshToken;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
 }
