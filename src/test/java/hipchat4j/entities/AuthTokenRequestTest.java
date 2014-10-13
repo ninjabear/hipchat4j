@@ -25,25 +25,25 @@ public class AuthTokenRequestTest {
     @Test
     public void testListToSpaceSeperated() throws Exception {
         List<String> abc = Arrays.asList("A", "B", "C");
-        assertEquals("A B C", AuthTokenRequest.listToSpaceSeperated(abc));
+        assertEquals("A B C", AuthTokenRequest.listToSpaceSeparated(abc));
 
         List<String> abspace = Arrays.asList(" ", "B", "C");
-        assertEquals("  B C", AuthTokenRequest.listToSpaceSeperated(abspace)); // space space b c
+        assertEquals("  B C", AuthTokenRequest.listToSpaceSeparated(abspace)); // space space b c
 
         List<String> abemptyd = Arrays.asList("A", "B", "", "D");
-        assertEquals("A B  D", AuthTokenRequest.listToSpaceSeperated(abemptyd)); // a b space d
+        assertEquals("A B  D", AuthTokenRequest.listToSpaceSeparated(abemptyd)); // a b space d
     }
 
     @Test (expected = IllegalArgumentException.class)
     public void testListToSpaceSeperatedNullElement() throws Exception {
         List<String> abc = Arrays.asList("A", "B", null, "D");
-        AuthTokenRequest.listToSpaceSeperated(abc);
+        AuthTokenRequest.listToSpaceSeparated(abc);
     }
 
     @Test
     public void testListToSpaceSeperatedNoList() throws Exception {
-        assertNull(AuthTokenRequest.listToSpaceSeperated(null));
-        assertNull(AuthTokenRequest.listToSpaceSeperated(new ArrayList<>()));
+        assertNull(AuthTokenRequest.listToSpaceSeparated(null));
+        assertNull(AuthTokenRequest.listToSpaceSeparated(new ArrayList<>()));
     }
 
     @Test

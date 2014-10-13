@@ -26,12 +26,12 @@ public class AuthTokenRequest {
         this.grantType = grantType;
         this.code = code;
         this.redirectUri = redirectUri;
-        this.scope = listToSpaceSeperated(scope);
+        this.scope = listToSpaceSeparated(scope);
         this.password = password;
         this.refreshToken = refreshToken;
     }
 
-    public static String listToSpaceSeperated(List<String> list)
+    public static String listToSpaceSeparated(List<String> list)
     {
         if (list==null||list.size()==0)
             return null;
