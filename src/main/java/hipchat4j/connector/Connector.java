@@ -27,4 +27,14 @@ public class Connector extends ConnectorAbstract {
         return "";
     }
 
+    @Override
+    public String put(String requestPath, Map<String, String> paramMap) {
+        return null;
+    }
+
+    @Override
+    public String delete(String requestPath, Map<String, String> paramMap) {
+        return null;
+    }
+
 }

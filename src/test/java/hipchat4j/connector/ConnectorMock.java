@@ -48,6 +48,16 @@ public class ConnectorMock extends ConnectorAbstract {
 
     }
 
+    @Override
+    public String put(String requestPath, Map<String, String> paramMap) {
+        return null;
+    }
+
+    @Override
+    public String delete(String requestPath, Map<String, String> paramMap) {
+        return null;
+    }
+
     public String getLastPostRequest() {
         return postrequests.get(postrequests.size()-1);
     }
