@@ -95,4 +95,10 @@ public class OAuthTest {
         String resp = oauth.generateToken(OAuth.GrantRequestType.Personal);
         assertEquals(responseJson, resp);
     }
+
+    @Test
+    public void testGetSession() throws Exception{
+        oauth.getSession("123");
+        assertEquals("/v2/oauth/token/123", cm.getLastGetRequest());
+    }
 }

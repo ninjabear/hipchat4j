@@ -102,4 +102,9 @@ public class OAuth {
                       null);
     }
 
+
+    public String getSession(String sessionToken)
+    {
+        return connector.get("/v2/oauth/token/"+sessionToken);
+    }
 }
