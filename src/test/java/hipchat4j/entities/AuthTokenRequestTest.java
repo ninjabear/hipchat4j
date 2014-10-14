@@ -23,7 +23,7 @@ public class AuthTokenRequestTest {
     }
 
     @Test
-    public void testListToSpaceSeperated() throws Exception {
+    public void testListToSpaceSeparated() throws Exception {
         List<String> abc = Arrays.asList("A", "B", "C");
         assertEquals("A B C", AuthTokenRequest.listToSpaceSeparated(abc));
 
