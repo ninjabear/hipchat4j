@@ -74,4 +74,19 @@ public class AuthTokenRequestTest {
         assertNull(atr.getRefreshToken());
 
     }
+
+    @Test
+    public void testConstructorAndGetters()
+    {
+        AuthTokenRequest r = new AuthTokenRequest("a", "b", "c", "d", Arrays.asList("e"), "f", "h");
+
+        assertEquals("a", r.getUsername());
+        assertEquals("b", r.getGrantType());
+        assertEquals("c", r.getCode());
+        assertEquals("d", r.getRedirectUri());
+        assertEquals("e", r.getScope());
+        assertEquals("f", r.getPassword());
+        assertEquals("h", r.getRefreshToken());
+
+    }
 }
