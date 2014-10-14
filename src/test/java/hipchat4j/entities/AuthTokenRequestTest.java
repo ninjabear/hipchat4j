@@ -35,13 +35,13 @@ public class AuthTokenRequestTest {
     }
 
     @Test (expected = IllegalArgumentException.class)
-    public void testListToSpaceSeperatedNullElement() throws Exception {
+    public void testListToSpaceSeparatedNullElement() throws Exception {
         List<String> abc = Arrays.asList("A", "B", null, "D");
         AuthTokenRequest.listToSpaceSeparated(abc);
     }
 
     @Test
-    public void testListToSpaceSeperatedNoList() throws Exception {
+    public void testListToSpaceSeparatedNoList() throws Exception {
         assertNull(AuthTokenRequest.listToSpaceSeparated(null));
         assertNull(AuthTokenRequest.listToSpaceSeparated(new ArrayList<>()));
     }
