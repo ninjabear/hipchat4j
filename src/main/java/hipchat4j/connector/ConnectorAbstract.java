@@ -24,9 +24,9 @@ public abstract class ConnectorAbstract {
     }
 
 
-    public abstract String post(String requestPath, Map<String, String> paramMap);
+    public abstract String post(String requestPath, String params);
     public abstract String get(String requestPath);
-    public abstract String put(String requestPath, Map<String,String> paramMap);
-    public abstract String delete(String requestPath, Map<String,String>paramMap);
+    public abstract String put(String requestPath, String params);
+    public abstract String delete(String requestPath);
 
 }

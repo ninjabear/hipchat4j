@@ -1,6 +1,8 @@
 package hipchat4j;
 
 import hipchat4j.connector.ConnectorAbstract;
+import hipchat4j.entities.AuthTokenRequest;
+import hipchat4j.json.JsonParser;
 
 import java.util.List;
 
@@ -55,7 +57,7 @@ public class OAuth {
         this.connector = connector;
     }
 
-    public void generateToken(String username,
+    public String generateToken(String username,
                               GrantRequestType grantType,
                               String code,
                               String redirectUri,
@@ -76,11 +78,22 @@ public class OAuth {
         if ( redirectUriSet && notAuthorizationGrant)
             throw new IllegalArgumentException("redirect uri only valid with AuthorizationCode type");
 
+
+        AuthTokenRequest atr = new AuthTokenRequest(username,
+                grantType.toString(),
+                code,
+                redirectUri,
+                scopes,
+                password,
+                refresh_token);
+
+        return connector.put("/v2/oauth/token", JsonParser.getInstance().toJson(atr));
+
     }
 
-    public void generateToken(GrantRequestType grantType)
+    public String generateToken(GrantRequestType grantType)
     {
-        generateToken(null,
+        return generateToken(null,
                       grantType,
                       null,
                       null,

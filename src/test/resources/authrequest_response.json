@@ -1,0 +1,8 @@
+{
+   "access_token":"anaccesstoken",
+   "expires_in":999,
+   "group_name":"breezy badgers",
+   "token_type":"bearer",
+   "scope":"admin",
+   "group_id":234
+}

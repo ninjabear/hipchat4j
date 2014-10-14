@@ -1,9 +1,15 @@
 package hipchat4j;
 
 import hipchat4j.config.Config;
+import hipchat4j.connector.ConnectorAbstract;
 import hipchat4j.connector.ConnectorMock;
+import hipchat4j.entities.AuthTokenRequest;
+import hipchat4j.json.JsonParser;
+import org.apache.commons.io.IOUtils;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.io.IOException;
 
 import static org.junit.Assert.*;
 
@@ -11,11 +17,14 @@ public class OAuthTest {
 
 
     private OAuth oauth;
+    private ConnectorMock cm;
+    private String responseJson;
 
     @Before
-    public void setUp()
-    {
-        oauth=new OAuth(new ConnectorMock(new Config("hello", "world")));
+    public void setUp() throws IOException {
+        cm = new ConnectorMock(new Config("hello", "world"));
+        oauth=new OAuth(cm);
+        responseJson = IOUtils.toString(getClass().getResourceAsStream("/authrequest_response.json"));
     }
 
 
@@ -63,5 +72,27 @@ public class OAuthTest {
                             null,
                             null,
                             null);
+    }
+
+    @Test
+    public void testCorrectApiPathType() throws Exception {
+        oauth.generateToken(OAuth.GrantRequestType.Personal);
+        assertEquals("/v2/oauth/token", cm.getLastPutRequest());
+        AuthTokenRequest atr = JsonParser.getInstance().fromJson(cm.getLastPutParam(), AuthTokenRequest.class);
+        assertEquals(OAuth.GrantRequestType.Personal.toString(), atr.getGrantType());
+    }
+
+    @Test (expected = IllegalArgumentException.class )
+    public void testGrantRequestTypeNull() throws Exception
+    {
+        OAuth.GrantRequestType.convertToAPI(null);
+    }
+
+    @Test
+    public void testGetTokenResponse() throws Exception
+    {
+        cm.addResponseMapping("/v2/oauth/token", "200", responseJson);
+        String resp = oauth.generateToken(OAuth.GrantRequestType.Personal);
+        assertEquals(responseJson, resp);
     }
 }

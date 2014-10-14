@@ -14,10 +14,12 @@ import java.util.Map;
 public class ConnectorMock extends ConnectorAbstract {
 
     private List<String> postrequests = new ArrayList<>();
-    private List<Map<String,String>> parammaps = new ArrayList<>();
+    private List<String> parammaps = new ArrayList<>();
     private List<String> getrequests = new ArrayList<>();
+    private List<String> putrequests = new ArrayList<>();
+    private List<String> putparams = new ArrayList<>();
 
-    private Map<String, Map<String, String>> getresponsemap = new HashMap<>();
+    private Map<String, Map<String, String>> responsemap = new HashMap<>();
     private static final String BODY_KEY = ":body";
     private static final String CODE_KEY = ":resp_code";
 
@@ -25,44 +27,58 @@ public class ConnectorMock extends ConnectorAbstract {
         super(config);
     }
 
-    @Override
-    public String post(String requestPath, Map<String, String> paramMap) {
-        postrequests.add(requestPath);
-        parammaps.add(paramMap);
-        return "";
-    }
 
-    @Override
-    public String get(String requestPath) {
-        getrequests.add(requestPath);
-        if (getresponsemap.get(requestPath)==null) {
+    private String getMappedResponse(String requestPath)
+    {
+        if (responsemap.get(requestPath)==null) {
             return "";
         } else {
-            Map<String,String> resp = getresponsemap.get(requestPath);
+            Map<String,String> resp = responsemap.get(requestPath);
             if (!resp.get(CODE_KEY).equals("200"))
             {
                 throw new IllegalStateException("couldn't get result - http response " + resp.get(CODE_KEY));
             }
             return resp.get(BODY_KEY);
         }
-
     }
 
     @Override
-    public String put(String requestPath, Map<String, String> paramMap) {
-        return null;
+    public String post(String requestPath, String params) {
+        postrequests.add(requestPath);
+        parammaps.add(params);
+        return "";
+    }
+
+
+
+    @Override
+    public String get(String requestPath) {
+        getrequests.add(requestPath);
+        return getMappedResponse(requestPath);
     }
 
     @Override
-    public String delete(String requestPath, Map<String, String> paramMap) {
+    public String put(String requestPath, String params) {
+        putrequests.add(requestPath);
+        putparams.add(params);
+        return getMappedResponse(requestPath);
+    }
+
+    @Override
+    public String delete(String requestPath) {
         return null;
     }
+
+
+    public String getLastPutRequest() { return putrequests.get(putrequests.size()-1); }
+
+    public String getLastPutParam() { return putparams.get(putparams.size()-1); }
 
     public String getLastPostRequest() {
         return postrequests.get(postrequests.size()-1);
     }
 
-    public Map<String,String> getLastPostParam() {
+    public String getLastPostParam() {
         return parammaps.get(parammaps.size()-1);
     }
 
@@ -70,9 +86,12 @@ public class ConnectorMock extends ConnectorAbstract {
         return getrequests.get(getrequests.size()-1);
     }
 
-    public void addGetResponseMapping(String path, String responseCode, String responseBody)
+    public void addResponseMapping(String path, String responseCode, String responseBody)
     {
-        getresponsemap.put(path, new HashMap<String,String>() {{ put(BODY_KEY, responseBody); put(CODE_KEY, responseCode); }});
+        responsemap.put(path, new HashMap<String, String>() {{
+            put(BODY_KEY, responseBody);
+            put(CODE_KEY, responseCode);
+        }});
     }
 
 }

@@ -28,10 +28,10 @@ public class EmoticonsTest {
         resp = new Emoticon(123, "123", "ashortcut",800, 600);
         String jsonresp = JsonParser.getInstance().toJson(resp);
 
-        cm.addGetResponseMapping("/v2/emoticon/123", "200", jsonresp );
-        cm.addGetResponseMapping("/v2/emoticon", "200", IOUtils.toString(this.getClass().getResourceAsStream("/emoticons_output.json")));
-        cm.addGetResponseMapping("/v2/emoticon?start-index=100&max-results=100", "200", IOUtils.toString(this.getClass().getResourceAsStream("/emoticons_output_pg2.json")));
-        cm.addGetResponseMapping("/v2/emoticon/260", "200", IOUtils.toString(this.getClass().getResourceAsStream("/emoticon_single.json")));
+        cm.addResponseMapping("/v2/emoticon/123", "200", jsonresp);
+        cm.addResponseMapping("/v2/emoticon", "200", IOUtils.toString(this.getClass().getResourceAsStream("/emoticons_output.json")));
+        cm.addResponseMapping("/v2/emoticon?start-index=100&max-results=100", "200", IOUtils.toString(this.getClass().getResourceAsStream("/emoticons_output_pg2.json")));
+        cm.addResponseMapping("/v2/emoticon/260", "200", IOUtils.toString(this.getClass().getResourceAsStream("/emoticon_single.json")));
     }
 
     @Test

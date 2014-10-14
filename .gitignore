@@ -4,3 +4,4 @@ hipchat4j.iml
 hipchat4j.ipr
 hipchat4j.iws
 out/
+*.rb

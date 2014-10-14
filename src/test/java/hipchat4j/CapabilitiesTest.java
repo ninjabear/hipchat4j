@@ -16,7 +16,7 @@ public class CapabilitiesTest {
     @Before
     public void setUp() throws Exception {
         cm = new ConnectorMock(new Config("test","test"));
-        cm.addGetResponseMapping("/v2/capabilities", "200", IOUtils.toString(this.getClass().getResourceAsStream("/capabilities.json")));
+        cm.addResponseMapping("/v2/capabilities", "200", IOUtils.toString(this.getClass().getResourceAsStream("/capabilities.json")));
         c = new Capabilities(cm);
     }
 

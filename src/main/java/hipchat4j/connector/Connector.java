@@ -16,7 +16,7 @@ public class Connector extends ConnectorAbstract {
     }
 
     @Override
-    public String post(String requestPath, Map<String, String> paramMap)
+    public String post(String requestPath, String params)
     {
         return "";
     }
@@ -28,12 +28,12 @@ public class Connector extends ConnectorAbstract {
     }
 
     @Override
-    public String put(String requestPath, Map<String, String> paramMap) {
+    public String put(String requestPath, String params) {
         return null;
     }
 
     @Override
-    public String delete(String requestPath, Map<String, String> paramMap) {
+    public String delete(String requestPath) {
         return null;
     }
 
