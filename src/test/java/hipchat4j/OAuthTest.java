@@ -77,8 +77,8 @@ public class OAuthTest {
     @Test
     public void testCorrectApiPathType() throws Exception {
         oauth.generateToken(OAuth.GrantRequestType.Personal);
-        assertEquals("/v2/oauth/token", cm.getLastPutRequest());
-        AuthTokenRequest atr = JsonParser.getInstance().fromJson(cm.getLastPutParam(), AuthTokenRequest.class);
+        assertEquals("/v2/oauth/token", cm.getLastPostRequest());
+        AuthTokenRequest atr = JsonParser.getInstance().fromJson(cm.getLastPostParam(), AuthTokenRequest.class);
         assertEquals(OAuth.GrantRequestType.Personal.toString(), atr.getGrantType());
     }
 
@@ -97,8 +97,9 @@ public class OAuthTest {
     }
 
     @Test
-    public void testGetSession() throws Exception{
+    public void testGetSession() throws Exception {
         oauth.getSession("123");
         assertEquals("/v2/oauth/token/123", cm.getLastGetRequest());
+        fail("finish me");
     }
 }

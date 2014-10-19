@@ -46,7 +46,7 @@ public class ConnectorMock extends ConnectorAbstract {
     public String post(String requestPath, String params) {
         postrequests.add(requestPath);
         parammaps.add(params);
-        return "";
+        return getMappedResponse(requestPath);
     }
 
 

@@ -87,7 +87,7 @@ public class OAuth {
                 password,
                 refresh_token);
 
-        return connector.put("/v2/oauth/token", JsonParser.getInstance().toJson(atr));
+        return connector.post("/v2/oauth/token", JsonParser.getInstance().toJson(atr));
 
     }
 
