@@ -10,12 +10,12 @@ import java.util.List;
  */
 public class Session {
 
-    public class Owner {
+    public static class Owner {
 
-        private class Links {
+        public static class Links {
             private String self;
 
-            private Links(String self) {
+            public Links(String self) {
                 this.self = self;
             }
 
@@ -54,11 +54,11 @@ public class Session {
         }
     }
 
-    public class Client {
+    public static class Client {
 
-        public class Room {
+        public static class Room {
 
-            public class Links {
+            public static class Links {
 
                 private String self;
                 private String webhooks;
