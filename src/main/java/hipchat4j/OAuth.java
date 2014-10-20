@@ -107,4 +107,7 @@ public class OAuth {
     {
         return connector.get("/v2/oauth/token/"+sessionToken);
     }
+
+    public void deleteSession(String sessionToken) { connector.delete("/v2/oauth/token/"+sessionToken); }
+
 }

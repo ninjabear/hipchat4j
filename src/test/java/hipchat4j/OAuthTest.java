@@ -4,6 +4,7 @@ import hipchat4j.config.Config;
 import hipchat4j.connector.ConnectorAbstract;
 import hipchat4j.connector.ConnectorMock;
 import hipchat4j.entities.AuthTokenRequest;
+import hipchat4j.entities.Session;
 import hipchat4j.json.JsonParser;
 import org.apache.commons.io.IOUtils;
 import org.junit.Before;
@@ -98,8 +99,16 @@ public class OAuthTest {
 
     @Test
     public void testGetSession() throws Exception {
-        oauth.getSession("123");
+        String session = oauth.getSession("123");
         assertEquals("/v2/oauth/token/123", cm.getLastGetRequest());
-        fail("finish me");
+        assertNotNull(session);
+
     }
+
+    @Test
+    public void testDeleteSession() throws Exception {
+        oauth.deleteSession("123");
+        assertEquals("/v2/oauth/token/123", cm.getLastDeleteRequest());
+    }
+
 }

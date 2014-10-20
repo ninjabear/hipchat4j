@@ -18,6 +18,7 @@ public class ConnectorMock extends ConnectorAbstract {
     private List<String> getrequests = new ArrayList<>();
     private List<String> putrequests = new ArrayList<>();
     private List<String> putparams = new ArrayList<>();
+    private List<String> deleterequests = new ArrayList<>();
 
     private Map<String, Map<String, String>> responsemap = new HashMap<>();
     private static final String BODY_KEY = ":body";
@@ -66,6 +67,7 @@ public class ConnectorMock extends ConnectorAbstract {
 
     @Override
     public String delete(String requestPath) {
+        deleterequests.add(requestPath);
         return null;
     }
 
@@ -85,6 +87,8 @@ public class ConnectorMock extends ConnectorAbstract {
     public String getLastGetRequest() {
         return getrequests.get(getrequests.size()-1);
     }
+
+    public String getLastDeleteRequest() { return deleterequests.get(deleterequests.size()-1); }
 
     public void addResponseMapping(String path, String responseCode, String responseBody)
     {
