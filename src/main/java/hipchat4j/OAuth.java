@@ -2,6 +2,8 @@ package hipchat4j;
 
 import hipchat4j.connector.ConnectorAbstract;
 import hipchat4j.entities.AuthTokenRequest;
+import hipchat4j.entities.AuthTokenResponse;
+import hipchat4j.entities.Session;
 import hipchat4j.json.JsonParser;
 
 import java.util.List;
@@ -57,7 +59,7 @@ public class OAuth {
         this.connector = connector;
     }
 
-    public String generateToken(String username,
+    public AuthTokenResponse generateToken(String username,
                               GrantRequestType grantType,
                               String code,
                               String redirectUri,
@@ -87,11 +89,11 @@ public class OAuth {
                 password,
                 refresh_token);
 
-        return connector.post("/v2/oauth/token", JsonParser.getInstance().toJson(atr));
+        return JsonParser.getInstance().fromJson(connector.post("/v2/oauth/token", JsonParser.getInstance().toJson(atr)), AuthTokenResponse.class);
 
     }
 
-    public String generateToken(GrantRequestType grantType)
+    public AuthTokenResponse generateToken(GrantRequestType grantType)
     {
         return generateToken(null,
                       grantType,
@@ -103,9 +105,9 @@ public class OAuth {
     }
 
 
-    public String getSession(String sessionToken)
+    public Session getSession(String sessionToken)
     {
-        return connector.get("/v2/oauth/token/"+sessionToken);
+        return JsonParser.getInstance().fromJson( connector.get("/v2/oauth/token/"+sessionToken), Session.class);
     }
 
     public void deleteSession(String sessionToken) { connector.delete("/v2/oauth/token/"+sessionToken); }

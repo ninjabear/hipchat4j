@@ -4,6 +4,7 @@ import hipchat4j.config.Config;
 import hipchat4j.connector.ConnectorAbstract;
 import hipchat4j.connector.ConnectorMock;
 import hipchat4j.entities.AuthTokenRequest;
+import hipchat4j.entities.AuthTokenResponse;
 import hipchat4j.entities.Session;
 import hipchat4j.json.JsonParser;
 import org.apache.commons.io.IOUtils;
@@ -93,16 +94,17 @@ public class OAuthTest {
     public void testGetTokenResponse() throws Exception
     {
         cm.addResponseMapping("/v2/oauth/token", "200", responseJson);
-        String resp = oauth.generateToken(OAuth.GrantRequestType.Personal);
-        assertEquals(responseJson, resp);
+        AuthTokenResponse r = oauth.generateToken(OAuth.GrantRequestType.Personal);
+        assertEquals("anaccesstoken", r.getAccessToken());
     }
 
     @Test
     public void testGetSession() throws Exception {
-        String session = oauth.getSession("123");
+        cm.addResponseMapping("/v2/oauth/token/123", "200", IOUtils.toString(this.getClass().getResourceAsStream("/session_expected_full.json")));
+        Session session = oauth.getSession("123");
         assertEquals("/v2/oauth/token/123", cm.getLastGetRequest());
         assertNotNull(session);
-
+        assertEquals("atoken", session.getAccessToken()); // tested in more detail on session entity
     }
 
     @Test
