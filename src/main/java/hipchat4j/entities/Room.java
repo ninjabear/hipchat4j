@@ -13,6 +13,14 @@ public class Room {
     public static class Statistics {
         public static class Links {
             private String self;
+
+            public Links(String self) {
+                this.self=self;
+            }
+
+            public String getSelf() {
+                return self;
+            }
         }
         private Links links;
 
@@ -59,6 +67,14 @@ public class Room {
 
         public static class Links {
             private String self;
+
+            public Links(String self) {
+                this.self = self;
+            }
+
+            public String getSelf() {
+                return self;
+            }
         }
 
         @SerializedName("mention_name")
@@ -95,6 +111,14 @@ public class Room {
 
         public static class Links {
             private String self;
+
+            public Links(String self) {
+                this.self = self;
+            }
+
+            public String getSelf() {
+                return self;
+            }
         }
 
         @SerializedName("mention_name")
@@ -137,7 +161,7 @@ public class Room {
     private boolean isArchived;
     private String privacy;
     @SerializedName("is_guest_accessible")
-    private String isGuestAccessible;
+    private boolean isGuestAccessible;
     private String topic;
     private List<Participant> participants;
     private Owner owner;
@@ -152,7 +176,7 @@ public class Room {
                 boolean isArchived,
                 String created,
                 String privacy,
-                String isGuestAccessible,
+                boolean isGuestAccessible,
                 String topic,
                 List<Participant> participants,
                 Owner owner,
@@ -202,7 +226,7 @@ public class Room {
         return privacy;
     }
 
-    public String getIsGuestAccessible() {
+    public boolean getIsGuestAccessible() {
         return isGuestAccessible;
     }
 
