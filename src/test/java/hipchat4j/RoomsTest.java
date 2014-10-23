@@ -37,4 +37,11 @@ public class RoomsTest {
         assertEquals("/v2/room/123", cm.getLastGetRequest());
         assertEquals("roomname", r.getName());
     }
+
+    @Test
+    public void getRooms() throws Exception {
+
+        assertNotNull(rooms.getRooms(true));
+        assertNotEquals(0,  rooms.getRooms(true) );
+    }
 }
