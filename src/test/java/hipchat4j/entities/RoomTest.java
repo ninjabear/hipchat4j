@@ -1,5 +1,8 @@
 package hipchat4j.entities;
 
+import hipchat4j.config.Config;
+import hipchat4j.connector.Connector;
+import hipchat4j.connector.ConnectorMock;
 import hipchat4j.json.JsonParser;
 import org.apache.commons.io.IOUtils;
 import org.junit.Before;
@@ -12,7 +15,8 @@ import static org.junit.Assert.*;
 
 public class RoomTest {
 
-    private Room r;
+    private Room r,lazyLoaderRoom;
+    private ConnectorMock cm;
 
     @Before
     public void setUp() throws Exception {
@@ -30,11 +34,17 @@ public class RoomTest {
                     555,
                     "http://somewhere/guest"
                    );
+
+        cm = new ConnectorMock(new Config("hello","world"));
+        cm.addResponseMapping("/v2/room/999", "200", IOUtils.toString(this.getClass().getResourceAsStream("/room_full.json")));
+        lazyLoaderRoom = new Room(999, cm);
     }
 
     @Test
     public void testGetXmppJid() throws Exception {
         assertEquals("xmppjid", r.getXmppJid());
+        assertEquals("xmpp_jid", lazyLoaderRoom.getXmppJid());
+        assertEquals("/v2/room/999", cm.getLastGetRequest());
     }
 
     @Test
@@ -42,77 +52,124 @@ public class RoomTest {
         Room.Statistics statslinks = r.getStatistics();
         assertNotNull(statslinks.getLinks());
         assertEquals("stats_self", statslinks.getLinks().getSelf());
+        assertEquals("statslinksself", lazyLoaderRoom.getStatistics().getLinks().getSelf());
+        assertEquals("/v2/room/999", cm.getLastGetRequest());
     }
 
     @Test
     public void testGetName() throws Exception {
         assertEquals("roomname", r.getName());
+        assertEquals("roomname", lazyLoaderRoom.getName());
+        assertEquals("/v2/room/999", cm.getLastGetRequest());
     }
 
     @Test
     public void testGetLinks() throws Exception {
         Room.Links links = r.getLinks();
+        Room.Links lazylinks = lazyLoaderRoom.getLinks();
+
+        assertEquals("/v2/room/999", cm.getLastGetRequest());
+
         assertNotNull(links);
         assertEquals("roommembers", links.getMembers());
         assertEquals("roomself", links.getSelf());
         assertEquals("roomwebhooks", links.getWebhooks());
         assertEquals("roomparticipants", links.getParticipants());
 
+        assertNotNull(lazylinks);
+        assertEquals("roommembers", lazylinks.getMembers());
+        assertEquals("roomself", lazylinks.getSelf());
+        assertEquals("roomwebhooks", lazylinks.getWebhooks());
+        assertEquals("roomparticipants", lazylinks.getParticipants());
     }
 
     @Test
     public void testGetCreated() throws Exception {
         assertEquals("createdstr", r.getCreated());
+        assertEquals("createdstamp", lazyLoaderRoom.getCreated());
+        assertEquals("/v2/room/999", cm.getLastGetRequest());
     }
 
     @Test
     public void testIsArchived() throws Exception {
         assertEquals(false, r.isArchived());
+        assertEquals(true, lazyLoaderRoom.isArchived());
+        assertEquals("/v2/room/999", cm.getLastGetRequest());
     }
 
     @Test
     public void testGetPrivacy() throws Exception {
         assertEquals("privacystr", r.getPrivacy());
+        assertEquals("privacy", lazyLoaderRoom.getPrivacy());
+        assertEquals("/v2/room/999", cm.getLastGetRequest());
     }
 
     @Test
     public void testGetIsGuestAccessible() throws Exception {
-        assertEquals(false, r.getIsGuestAccessible());
+        assertEquals(false, r.isGuestAccessible());
+        assertEquals(true, lazyLoaderRoom.isGuestAccessible());
+        assertEquals("/v2/room/999", cm.getLastGetRequest());
     }
 
     @Test
     public void testGetTopic() throws Exception {
         assertEquals("atopic", r.getTopic());
+        assertEquals("atopic", lazyLoaderRoom.getTopic());
+        assertEquals("/v2/room/999", cm.getLastGetRequest());
     }
 
     @Test
     public void testGetParticipants() throws Exception {
+
         List<Room.Participant> participants = r.getParticipants();
         assertEquals(1, participants.size());
         assertEquals(99, participants.get(0).getId());
         assertEquals("fullname", participants.get(0).getName());
         assertEquals("ninjabear", participants.get(0).getMentionName());
         assertEquals("selfpart", participants.get(0).getLinks().getSelf());
+
+        List<Room.Participant> lazy = lazyLoaderRoom.getParticipants();
+        assertEquals(2, lazy.size());
+        assertEquals(134, lazy.get(0).getId());
+        assertEquals("mentionfull", lazy.get(0).getName());
+        assertEquals("mention", lazy.get(0).getMentionName());
+        assertEquals("selfpart1", lazy.get(0).getLinks().getSelf());
+
+        assertEquals("/v2/room/999", cm.getLastGetRequest());
+
     }
 
     @Test
     public void testGetOwner() throws Exception {
+
         Room.Owner owner = r.getOwner();
         assertNotNull(owner);
         assertEquals(13, owner.getId());
         assertEquals("ninja", owner.getMentionName());
         assertEquals("ninja test", owner.getName());
         assertEquals("self", owner.getLinks().getSelf());
+
+        Room.Owner lazy = lazyLoaderRoom.getOwner();
+        assertNotNull(lazy);
+        assertEquals(55, lazy.getId());
+        assertEquals("owner", lazy.getMentionName());
+        assertEquals("ownerfull", lazy.getName());
+        assertEquals("ownerself", lazy.getLinks().getSelf());
+
     }
 
     @Test
     public void testGetId() throws Exception {
         assertEquals(555, r.getId());
+        assertEquals(999, lazyLoaderRoom.getId());
     }
 
     @Test
     public void testGetGuestAccessURL() throws Exception {
         assertEquals("http://somewhere/guest", r.getGuestAccessURL());
+        assertEquals("http://test/guest", lazyLoaderRoom.getGuestAccessURL());
+
+        assertEquals("/v2/room/999", cm.getLastGetRequest());
     }
 
     @Test
@@ -132,7 +189,7 @@ public class RoomTest {
         assertEquals("createdstamp", r.getCreated());
         assertEquals(true, r.isArchived());
         assertEquals("privacy", r.getPrivacy());
-        assertEquals(true, r.getIsGuestAccessible());
+        assertEquals(true, r.isGuestAccessible());
         assertEquals("atopic", r.getTopic());
 
         assertNotNull(r.getParticipants());
