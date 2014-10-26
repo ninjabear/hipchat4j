@@ -65,5 +65,14 @@ public class Rooms {
 
     }
 
+    public int createRoom(String topic, boolean guestAccessPermitted, String name, String ownerUserId, String privacyMode)
+    {
+        return -1;
+    }
+
+    public int createRoom(String name) {
+        return createRoom(null, false, name, null, "public");
+    }
+
 
 }

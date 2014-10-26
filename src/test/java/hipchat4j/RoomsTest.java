@@ -65,4 +65,21 @@ public class RoomsTest {
         assertNotEquals("/v2/room/?start-index=500&max-results=500&include-archived=true", cm.getLastGetRequest()); // don't get the next page
 
     }
+
+    @Test
+    public void createRoomShort()
+    {
+        int resp = rooms.createRoom("aname");
+        assertTrue(resp>=0);
+        assertEquals("/v2/room", cm.getLastGetRequest());
+    }
+
+    @Test
+    public void createRoomFull()
+    {
+        int resp = rooms.createRoom("topic", true, "aroom", "123", "private" );
+        assertTrue(resp>=0);
+        assertEquals("/v2/room", cm.getLastGetRequest());
+    }
+
 }
