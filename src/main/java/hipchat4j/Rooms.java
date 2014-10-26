@@ -82,4 +82,15 @@ public class Rooms {
     }
 
 
+    public void updateRoom(int id, String name, String privacyMode, boolean isArchived, boolean isGuestAccessible, String topic, String ownerId)
+    {
+        updateRoom(""+id, name, privacyMode, isArchived, isGuestAccessible, topic, ownerId);
+    }
+
+    public void updateRoom(String room, String name, String privacyMode, boolean isArchived, boolean isGuestAccessible, String topic, String ownerId)
+    {
+
+      //  connector.put("/v2/room/"+room, )
+    }
+
 }

@@ -106,4 +106,17 @@ public class RoomsTest {
 
     }
 
+    @Test
+    public void updateRoomInt() throws Exception {
+      //  rooms.updateRoom(123);
+      //  assertEquals("/v2/room/123", cm.getLastPutRequest());
+    }
+
+    @Test
+    public void updateRoom() throws Exception {
+      //  rooms.updateRoom("123");
+     //   assertEquals("/v2/room/123", cm.getLastPutRequest());
+    }
+
+
 }
