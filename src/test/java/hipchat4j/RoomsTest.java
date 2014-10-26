@@ -3,7 +3,9 @@ package hipchat4j;
 import hipchat4j.config.Config;
 import hipchat4j.connector.ConnectorMock;
 import hipchat4j.entities.Room;
+import hipchat4j.entities.RoomCreateRequest;
 import hipchat4j.entities.RoomListPage;
+import hipchat4j.json.JsonParser;
 import org.apache.commons.io.IOUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,6 +13,7 @@ import org.junit.Test;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class RoomsTest {
 
@@ -67,19 +70,40 @@ public class RoomsTest {
     }
 
     @Test
-    public void createRoomShort()
+    public void createRoomShort() throws Exception
     {
-        int resp = rooms.createRoom("aname");
-        assertTrue(resp>=0);
-        assertEquals("/v2/room", cm.getLastGetRequest());
+        String jsonResponse = IOUtils.toString(this.getClass().getResourceAsStream("/create_room_response.json"));
+        cm.addResponseMapping("/v2/room", "200", jsonResponse);
+        String resp = rooms.createRoom("aname");
+
+        assertEquals("/v2/room", cm.getLastPostRequest());
+        assertEquals("123", resp);
+        RoomCreateRequest roomRequest = JsonParser.getInstance().fromJson(cm.getLastPostParam(), RoomCreateRequest.class);
+
+        assertNull(roomRequest.getTopic());
+        assertFalse(roomRequest.getIsGuestAccess());
+        assertNull(roomRequest.getOwnerUserId());
+        assertEquals("public", roomRequest.getPrivacyMode());
+        assertEquals("aname", roomRequest.getName());
     }
 
     @Test
-    public void createRoomFull()
+    public void createRoomFull() throws Exception
     {
-        int resp = rooms.createRoom("topic", true, "aroom", "123", "private" );
-        assertTrue(resp>=0);
-        assertEquals("/v2/room", cm.getLastGetRequest());
+        cm.addResponseMapping("/v2/room", "200", IOUtils.toString(this.getClass().getResourceAsStream("/create_room_response.json")));
+
+         String resp = rooms.createRoom("topic", true, "aroom", "123", "private" );
+         assertEquals("/v2/room", cm.getLastPostRequest());
+
+        assertEquals("123", resp);
+        RoomCreateRequest roomRequest = JsonParser.getInstance().fromJson(cm.getLastPostParam(), RoomCreateRequest.class);
+
+        assertEquals("topic", roomRequest.getTopic());
+        assertEquals(true, roomRequest.getIsGuestAccess());
+        assertEquals("123", roomRequest.getOwnerUserId());
+        assertEquals("private", roomRequest.getPrivacyMode());
+        assertEquals("aroom", roomRequest.getName());
+
     }
 
 }

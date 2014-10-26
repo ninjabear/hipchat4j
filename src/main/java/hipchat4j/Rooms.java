@@ -2,6 +2,8 @@ package hipchat4j;
 
 import hipchat4j.connector.ConnectorAbstract;
 import hipchat4j.entities.Room;
+import hipchat4j.entities.RoomCreateRequest;
+import hipchat4j.entities.RoomCreateResponse;
 import hipchat4j.entities.RoomListPage;
 import hipchat4j.json.JsonParser;
 
@@ -65,12 +67,17 @@ public class Rooms {
 
     }
 
-    public int createRoom(String topic, boolean guestAccessPermitted, String name, String ownerUserId, String privacyMode)
+    public String createRoom(String topic, boolean guestAccessPermitted, String name, String ownerUserId, String privacyMode)
     {
-        return -1;
+        RoomCreateRequest roomCreateRequest;
+        roomCreateRequest = new RoomCreateRequest(topic, guestAccessPermitted, name, ownerUserId, privacyMode);
+        String postRequest = JsonParser.getInstance().toJson(roomCreateRequest);
+        String resp = connector.post("/v2/room", postRequest);
+        RoomCreateResponse response = JsonParser.getInstance().fromJson(resp, RoomCreateResponse.class);
+        return response.getId();
     }
 
-    public int createRoom(String name) {
+    public String createRoom(String name) {
         return createRoom(null, false, name, null, "public");
     }
 
