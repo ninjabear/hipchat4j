@@ -5,6 +5,7 @@ import hipchat4j.connector.ConnectorMock;
 import hipchat4j.entities.Room;
 import hipchat4j.entities.RoomCreateRequest;
 import hipchat4j.entities.RoomListPage;
+import hipchat4j.entities.RoomUpdateRequest;
 import hipchat4j.json.JsonParser;
 import org.apache.commons.io.IOUtils;
 import org.junit.Before;
@@ -108,15 +109,44 @@ public class RoomsTest {
 
     @Test
     public void updateRoomInt() throws Exception {
-      //  rooms.updateRoom(123);
-      //  assertEquals("/v2/room/123", cm.getLastPutRequest());
+        rooms.updateRoom(123, "myname", "private", false, false, "atopic", "555");
+        assertEquals("/v2/room/123", cm.getLastPutRequest());
+
+        String sentRequest = cm.getLastPutParam();
+        RoomUpdateRequest roomRequest = JsonParser.getInstance().fromJson(sentRequest, RoomUpdateRequest.class);
+        assertEquals("555", roomRequest.getOwnerId());
+        assertEquals("myname", roomRequest.getName());
+        assertEquals("atopic", roomRequest.getTopic());
+        assertEquals("private", roomRequest.getPrivacy());
+        assertEquals(false, roomRequest.isArchived());
+        assertEquals(false, roomRequest.isGuestAccessible());
     }
 
     @Test
     public void updateRoom() throws Exception {
-      //  rooms.updateRoom("123");
-     //   assertEquals("/v2/room/123", cm.getLastPutRequest());
+        rooms.updateRoom("123", "myname", "private", false, false, "atopic", "555");
+        assertEquals("/v2/room/123", cm.getLastPutRequest());
+
+        String sentRequest = cm.getLastPutParam();
+        RoomUpdateRequest roomRequest = JsonParser.getInstance().fromJson(sentRequest, RoomUpdateRequest.class);
+        assertEquals("555", roomRequest.getOwnerId());
+        assertEquals("myname", roomRequest.getName());
+        assertEquals("atopic", roomRequest.getTopic());
+        assertEquals("private", roomRequest.getPrivacy());
+        assertEquals(false, roomRequest.isArchived());
+        assertEquals(false, roomRequest.isGuestAccessible());
     }
 
+    @Test
+    public void deleteRoomInt() throws Exception {
+        rooms.deleteRoom(123);
+        assertEquals("/v2/room/123", cm.getLastDeleteRequest());
+    }
+
+    @Test
+    public void deleteRoom() throws Exception {
+        rooms.deleteRoom("123");
+        assertEquals("/v2/room/123", cm.getLastDeleteRequest());
+    }
 
 }

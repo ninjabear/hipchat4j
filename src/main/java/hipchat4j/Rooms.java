@@ -1,10 +1,7 @@
 package hipchat4j;
 
 import hipchat4j.connector.ConnectorAbstract;
-import hipchat4j.entities.Room;
-import hipchat4j.entities.RoomCreateRequest;
-import hipchat4j.entities.RoomCreateResponse;
-import hipchat4j.entities.RoomListPage;
+import hipchat4j.entities.*;
 import hipchat4j.json.JsonParser;
 
 import java.util.ArrayList;
@@ -89,8 +86,18 @@ public class Rooms {
 
     public void updateRoom(String room, String name, String privacyMode, boolean isArchived, boolean isGuestAccessible, String topic, String ownerId)
     {
+        RoomUpdateRequest r = new RoomUpdateRequest(name, topic, privacyMode, isArchived, isGuestAccessible, ownerId);
+       connector.put("/v2/room/"+room, JsonParser.getInstance().toJson(r));
+    }
 
-      //  connector.put("/v2/room/"+room, )
+    public void deleteRoom(int id)
+    {
+        deleteRoom(""+id);
+    }
+
+    public void deleteRoom(String room)
+    {
+        connector.delete("/v2/room/"+room);
     }
 
 }
