@@ -1,0 +1,20 @@
+{
+   "items":[
+      {
+         "id":501,
+         "links":{
+            "self":"self",
+            "webhooks":"webhooks",
+            "members":"members",
+            "participants":"participants"
+         },
+         "name":"roomname"
+      }
+   ],
+   "startIndex":501,
+   "maxResults":500,
+   "links":{
+      "self":"pageself",
+      "prev":"pageprev"
+   }
+}

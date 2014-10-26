@@ -30,30 +30,39 @@ public class Rooms {
         return JsonParser.getInstance().fromJson(resp, Room.class);
     }
 
-    public RoomListPage getRooms(int start, int end, boolean includeArchived) {
-       return JsonParser.getInstance().fromJson(connector.get("/v2/room/?start-index="+start+"&max-results="+end+"&include-archived="+Boolean.valueOf(includeArchived).toString()),
+    public RoomListPage getRooms(int start, int size, boolean includeArchived) {
+       return JsonParser.getInstance().fromJson(connector.get("/v2/room/?start-index="+start+"&max-results="+size+"&include-archived="+Boolean.valueOf(includeArchived).toString()),
                                                 RoomListPage.class);
     }
 
     public List<Room> getRooms(boolean includeArchived){
 
         final int blocksize = 500;
-
-        RoomListPage running = getRooms(0, blocksize, includeArchived);
+        int currentpage=0;
+        RoomListPage running;
         List<Room> rooms = new ArrayList<>();
 
         do {
-
+            running = getRooms(currentpage*blocksize, blocksize, includeArchived);
             rooms.addAll(convertToRooms(running));
-
-        } while (running.getItems().size()==blocksize&&running.getLinks().getNext()!=null);
+            currentpage+=1;
+        } while (running.getItems().size()==blocksize);
 
         return rooms;
     }
 
-    private static List<Room> convertToRooms(RoomListPage rlp)
+    private List<Room> convertToRooms(RoomListPage rlp)
     {
-       return new ArrayList<>();
+        ArrayList<Room> rooms = new ArrayList<>();
+
+        for (RoomListPage.Item i : rlp.getItems())
+        {
+            Room room = new Room(i.getId(), connector);
+            rooms.add(room);
+        }
+
+        return rooms;
+
     }
 
 
