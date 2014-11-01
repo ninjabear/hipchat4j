@@ -52,4 +52,25 @@ public class MessageTest {
         assertEquals(Message.MessageType.FromUser, messageStyle1.getMessageType());
     }
 
+    @Test
+    public void testGetFrom() {
+        assertEquals("fullfrom", messageStyle1.getFromName());
+        assertEquals("ninja", messageStyle2.getFromName());
+    }
+
+    @Test
+    public void testGetTwitterUser() {
+        Message.MessageLinks.TwitterUser t = messageStyle1.getTwitterUser();
+        Message.MessageLinks.TwitterUser t2 = messageStyle2.getTwitterUser();
+
+        assertNull(t2);
+        assertNotNull(t);
+
+        //TwitterUser(1, "lonrery", "http://twit", "roney"),
+        assertEquals(1, t.getFollowers());
+        assertEquals("lonrery", t.getName());
+        assertEquals("http://twit", t.getProfileImageUrl());
+        assertEquals("roney", t.getScreenName());
+    }
+
 }

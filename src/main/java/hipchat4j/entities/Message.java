@@ -574,6 +574,23 @@ public class Message {
         return MessageType.FromUser;
     }
 
+    public String getFromName() {
+        if ( MessageType.FromAddOn.equals(getMessageType()) )
+        {
+            return (String)from;
+        }
+
+        return ((From)this.from).getName();
+    }
+
+    public MessageLinks.TwitterUser getTwitterUser() {
+
+        if (MessageType.FromAddOn.equals(getMessageType()))
+            return null;
+
+        return this.messageLinks.getTwitterUser();
+    }
+
     public MessageLinks getMessageLinks() {
         return messageLinks;
     }
