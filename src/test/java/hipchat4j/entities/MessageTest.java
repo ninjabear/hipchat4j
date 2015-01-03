@@ -178,5 +178,12 @@ public class MessageTest {
         assertEquals("test2", messageStyle2.getType());                
     }
     
+    @Test
+    public void testFromJSON() {
+        
+        // test above but from json expected format(s)
+        
+    }
+    
 
 }
