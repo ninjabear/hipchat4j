@@ -18,7 +18,8 @@ public class MessageTest {
                 new Message.MessageLinks.Image("imgb64", "myimage.jpg"),
                 new Message.MessageLinks.TwitterStatus("statusname", "statuscreated", "http://statusurl", "content", "src", "screenname"),
                 new Message.MessageLinks.Video("author", "vidthumb", 2, "myvid"),
-                new Message.MessageLinks.Link("linkdesc", "linktitle", "linkheader", "linktext", "http://linkurl", "http://favicon"), "yes"
+                new Message.MessageLinks.Link("linkdesc", "linktitle", "linkheader", "linktext", "http://linkurl", "http://favicon"), 
+                "yes"
         );
         Message.File file = new Message.File("http://fileurl", "http://thumburl", "filename", 999);
         Message.Mentions mentions = new Message.Mentions("@mentionuser", 555, new Message.Mentions.Links("mentionsself"), "mention user");
@@ -66,11 +67,55 @@ public class MessageTest {
         assertNull(t2);
         assertNotNull(t);
 
-        //TwitterUser(1, "lonrery", "http://twit", "roney"),
         assertEquals(1, t.getFollowers());
         assertEquals("lonrery", t.getName());
         assertEquals("http://twit", t.getProfileImageUrl());
         assertEquals("roney", t.getScreenName());
+    }
+    
+    @Test
+    public void testGetMessageLinks() {
+        assertNull(messageStyle2.getMessageLinks());  
+        
+        Message.MessageLinks ml = messageStyle1.getMessageLinks();        
+        assertNotNull(ml);
+        
+        Message.MessageLinks.Image i = ml.getImage();
+        assertNotNull(i);
+        assertEquals("imgb64", i.getImage());
+        assertEquals("myimage.jpg", i.getName());
+        
+        assertNotNull(ml.getTwitterUser()); // this is the same pretty much as above        
+        assertEquals(1, ml.getTwitterUser().getFollowers());
+        assertEquals("lonrery", ml.getTwitterUser().getName());
+        assertEquals("http://twit", ml.getTwitterUser().getProfileImageUrl());
+        assertEquals("roney", ml.getTwitterUser().getScreenName());
+        
+        assertNotNull(ml.getTwitterStatus());
+        assertEquals("statusname", ml.getTwitterStatus().getName());
+        assertEquals("statuscreated", ml.getTwitterStatus().getCreated());
+        assertEquals("http://statusurl", ml.getTwitterStatus().getProfileImageUrl());
+        assertEquals("content", ml.getTwitterStatus().getText());
+        assertEquals("src", ml.getTwitterStatus().getSource());
+        assertEquals("screenname", ml.getTwitterStatus().getScreenName());
+        
+        assertNotNull(ml.getVideo());
+        assertEquals("author", ml.getVideo().getAuthor());
+        assertEquals("vidthumb", ml.getVideo().getThumbnailUrl());
+        assertEquals(2, ml.getVideo().getViews());
+        assertEquals("myvid", ml.getVideo().getTitle());
+        
+        assertNotNull(ml.getLink());
+        assertEquals("linkdesc", ml.getLink().getDescription());
+        assertEquals("linktitle", ml.getLink().getTitle());
+        assertEquals("linkheader", ml.getLink().getHeaderText());
+        assertEquals("linktext", ml.getLink().getLinkText());
+        assertEquals("http://linkurl", ml.getLink().getFullUrl());
+        assertEquals("http://favicon", ml.getLink().getFaviconUrl());
+        
+        assertEquals("yes", ml.getType());
+        assertEquals("http://twitterurl", ml.getUrl());
+        
     }
 
 }
