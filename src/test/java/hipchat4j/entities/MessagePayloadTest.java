@@ -62,6 +62,14 @@ public class MessagePayloadTest {
     public void testGetFrom() {
         assertEquals("fullfrom", messagePayloadStyle1.getFromName());
         assertEquals("ninja", messagePayloadStyle2.getFromName());
+
+        assertNotNull(messagePayloadStyle1.getFrom());
+        assertNotNull(messagePayloadStyle1.getFrom().getLinks());
+        assertEquals("selffrom", messagePayloadStyle1.getFrom().getLinks().getSelf());
+        assertEquals("@mentionName", messagePayloadStyle1.getFrom().getMentionName());
+        assertEquals(123, messagePayloadStyle1.getFrom().getId());
+
+        assertNull(messagePayloadStyle2.getFrom());
     }
 
     @Test
@@ -192,6 +200,12 @@ public class MessagePayloadTest {
         assertEquals(MessagePayload.MessageType.FromUser, m.getMessageType());
         assertEquals("fullfrom", m.getFromName());
 
+        assertNotNull(m.getFrom());
+        assertNotNull(m.getFrom().getLinks());
+        assertEquals("selffrom", m.getFrom().getLinks().getSelf());
+        assertEquals("@mentionName", m.getFrom().getMentionName());
+        assertEquals(123, m.getFrom().getId());
+
         MessagePayload.MessageLinks.TwitterUser t = m.getTwitterUser();
         assertNotNull(t);
         assertEquals(1, t.getFollowers());
@@ -266,6 +280,7 @@ public class MessagePayloadTest {
 
         assertEquals(MessagePayload.MessageType.FromAddOn, m.getMessageType());
         assertEquals("ninja", m.getFromName());
+        assertNull(messagePayloadStyle2.getFrom());
         assertNull( m.getTwitterUser() );
         assertNull(m.getMessageLinks());
         assertNull(m.getFile());
@@ -283,5 +298,21 @@ public class MessagePayloadTest {
         assertEquals("test2", m.getType());
     }
 
+
+    @Test (expected = IllegalStateException.class)
+    public void testMessageStyleGarbled() throws Exception {
+        String json = IOUtils.toString(this.getClass().getResourceAsStream("/message_style_garbled_from.json"));
+        MessagePayload p = JsonParser.getInstance().fromJson(json, Message.class).getMessagePayload();
+
+        String name = p.getFromName();
+    }
+
+    @Test (expected = IllegalStateException.class)
+    public void testMessageStyleGarbledFrom() throws Exception {
+        String json = IOUtils.toString(this.getClass().getResourceAsStream("/message_style_garbled_from.json"));
+        MessagePayload p = JsonParser.getInstance().fromJson(json, Message.class).getMessagePayload();
+
+        MessagePayload.From f = p.getFrom();
+    }
 
 }

@@ -414,6 +414,30 @@ public class MessagePayload {
                        from.get("name").toString());
     }
 
+    public From getFrom() {
+       if ( MessageType.FromAddOn.equals(getMessageType()) )
+       {
+            return null;
+       }
+
+        try {
+            LinkedTreeMap<String, Object> tree = (LinkedTreeMap<String, Object>) this.from;
+            return buildFromObject(tree);
+        } catch (ClassCastException e)
+        {
+
+        }
+
+        try {
+            return (From)from;
+        } catch (ClassCastException e)
+        {
+
+        }
+
+        throw new IllegalStateException("can't work out from type");
+    }
+
     public String getFromName() {
         if ( MessageType.FromAddOn.equals(getMessageType()) )
         {

@@ -1,0 +1,19 @@
+{
+  "message": {
+    "from": 99,
+    "message_format": "html",
+    "color": "red",
+    "date": "2014-11-01T15:19:20+00:00",
+    "mentions": {
+      "mention_name": "@mention",
+      "id": 75,
+      "links": {
+        "self": "2self"
+      },
+      "name": "mention2"
+    },
+    "message": "hello world",
+    "type": "test2",
+    "id": "ABC"
+  }
+}
