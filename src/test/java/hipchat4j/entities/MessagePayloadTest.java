@@ -257,6 +257,31 @@ public class MessagePayloadTest {
         assertEquals("MY MESSAGE STYLE 1", m.getMessage());
         assertEquals("test", m.getType());
     }
-    
+
+    @Test
+    public void testMessageStyle2FromJSON() throws Exception {
+        String json = IOUtils.toString(this.getClass().getResourceAsStream("/message_style2.json"));
+        Message container = JsonParser.getInstance().fromJson(json, Message.class);
+        MessagePayload m = container.getMessagePayload();
+
+        assertEquals(MessagePayload.MessageType.FromAddOn, m.getMessageType());
+        assertEquals("ninja", m.getFromName());
+        assertNull( m.getTwitterUser() );
+        assertNull(m.getMessageLinks());
+        assertNull(m.getFile());
+
+        assertEquals("@mention", m.getMentions().getMentionName());
+        assertEquals(75, m.getMentions().getId());
+        assertEquals("mention2", m.getMentions().getName());
+        assertEquals("2self", m.getMentions().getLinks().getSelf());
+
+        assertEquals("html", m.getMessageFormat());
+        assertEquals("red", m.getColor());
+        assertEquals("ABC", m.getId());
+        assertEquals("2014-11-01T15:19:20+00:00", m.getDate());
+        assertEquals("hello world", m.getMessage());
+        assertEquals("test2", m.getType());
+    }
+
 
 }
