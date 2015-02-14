@@ -551,7 +551,7 @@ public class Message {
     }
 
 
-    public Message(From from, MessageLinks messageLinks, File file, Mentions mentions, String message, String type, String id)
+    public Message(From from, MessageLinks messageLinks, File file, String date, Mentions mentions, String message, String type, String id)
     {
         this.from=from;
         this.messageLinks=messageLinks;
@@ -560,6 +560,7 @@ public class Message {
         this.message = message;
         this.type = type;
         this.id = id;
+        this.date = date;
     }
 
     public MessageType getMessageType() {

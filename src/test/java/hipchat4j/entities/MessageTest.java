@@ -24,9 +24,12 @@ public class MessageTest {
         Message.File file = new Message.File("http://fileurl", "http://thumburl", "filename", 999);
         Message.Mentions mentions = new Message.Mentions("@mentionuser", 555, new Message.Mentions.Links("mentionsself"), "mention user");
 
+        String date = "2014-11-01T15:19:20+00:00";
+
         messageStyle1 = new Message(from,
                                     messageLinks,
                                     file,
+                                    date,
                                     mentions,
                                     "MY MESSAGE STYLE 1",
                                     "test",
@@ -36,7 +39,7 @@ public class MessageTest {
         messageStyle2 = new Message("ninja",
                                     "html",
                                     "red",
-                                    "2014-11-01T15:19:20+00:00",
+                                    date,
                                     new Message.Mentions("@mention",
                                                         75,
                                                         new Message.Mentions.Links("2self"),
@@ -162,7 +165,7 @@ public class MessageTest {
     
     @Test
     public void testGetDate() {
-        assertNull(messageStyle1.getDate());
+        assertEquals("2014-11-01T15:19:20+00:00", messageStyle1.getDate());
         assertEquals("2014-11-01T15:19:20+00:00", messageStyle2.getDate());
     }
     
