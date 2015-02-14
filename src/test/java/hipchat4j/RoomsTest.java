@@ -2,10 +2,7 @@ package hipchat4j;
 
 import hipchat4j.config.Config;
 import hipchat4j.connector.ConnectorMock;
-import hipchat4j.entities.Room;
-import hipchat4j.entities.RoomCreateRequest;
-import hipchat4j.entities.RoomListPage;
-import hipchat4j.entities.RoomUpdateRequest;
+import hipchat4j.entities.*;
 import hipchat4j.json.JsonParser;
 import org.apache.commons.io.IOUtils;
 import org.junit.Before;
@@ -27,6 +24,7 @@ public class RoomsTest {
         rooms = new Rooms(cm);
         cm.addResponseMapping("/v2/room/abc", "200", IOUtils.toString(this.getClass().getResourceAsStream("/room_full.json")));
         cm.addResponseMapping("/v2/room/123", "200", IOUtils.toString(this.getClass().getResourceAsStream("/room_full.json")));
+        cm.addResponseMapping("/v2/room/something/history/else", "200", IOUtils.toString(this.getClass().getResourceAsStream("/message_style1.json")));
     }
 
     @Test
@@ -161,6 +159,8 @@ public class RoomsTest {
 
     @Test
     public void testGetMessage() throws Exception {
-        rooms.getMessage("something", "else");
+        MessagePayload payload = rooms.getMessage("something", "else");
+        assertEquals("/v2/room/something/history/else", cm.getLastGetRequest());
+        assertNotNull(payload);
     }
 }

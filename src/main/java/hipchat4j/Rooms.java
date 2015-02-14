@@ -86,7 +86,7 @@ public class Rooms {
 
     public void updateRoom(String room, String name, String privacyMode, boolean isArchived, boolean isGuestAccessible, String topic, String ownerId)
     {
-        RoomUpdateRequest r = new RoomUpdateRequest(name, topic, privacyMode, isArchived, isGuestAccessible, ownerId);
+       RoomUpdateRequest r = new RoomUpdateRequest(name, topic, privacyMode, isArchived, isGuestAccessible, ownerId);
        connector.put("/v2/room/"+room, JsonParser.getInstance().toJson(r));
     }
 
@@ -109,9 +109,11 @@ public class Rooms {
         throw new UnsupportedOperationException("TODO");
     }
 
-    public void getMessage(String room, String messageId)
+    public MessagePayload getMessage(String room, String messageId)
     {
-        throw new UnsupportedOperationException("TODO");
+        String resp = connector.get("/v2/room/"+room+"/history/"+messageId);
+        MessagePayload payload = JsonParser.getInstance().fromJson(resp, Message.class).getMessagePayload();
+        return payload;
     }
 
 }
