@@ -5,3 +5,7 @@ hipchat4j.ipr
 hipchat4j.iws
 out/
 *.rb
+/.nb-gradle/private/
+.idea
+.nb-gradle-properties
+.nb-gradle
