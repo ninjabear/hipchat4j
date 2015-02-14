@@ -100,4 +100,18 @@ public class Rooms {
         connector.delete("/v2/room/"+room);
     }
 
+    public void getRecentHistory(String room) {
+        throw new UnsupportedOperationException("TODO");
+    }
+
+    public void getHistory(String room)
+    {
+        throw new UnsupportedOperationException("TODO");
+    }
+
+    public void getMessage(String room, String messageId)
+    {
+        throw new UnsupportedOperationException("TODO");
+    }
+
 }

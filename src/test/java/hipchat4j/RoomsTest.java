@@ -149,4 +149,18 @@ public class RoomsTest {
         assertEquals("/v2/room/123", cm.getLastDeleteRequest());
     }
 
+    @Test
+    public void testGetRecentHistory() throws Exception {
+        rooms.getRecentHistory("latest");
+    }
+
+    @Test
+    public void testGetHistory() throws Exception {
+        rooms.getHistory("abc");
+    }
+
+    @Test
+    public void testGetMessage() throws Exception {
+        rooms.getMessage("something", "else");
+    }
 }
