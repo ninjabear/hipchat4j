@@ -168,7 +168,7 @@ public class RoomsTest {
 
     @Test
     public void testGetHistory() throws Exception {
-        MessageHistory hist = rooms.getHistory("abc");
+        MessageHistoryPage hist = rooms.getHistory("abc");
         assertEquals("/v2/room/abc/history/?start-index=0&max-results=100&reverse=true", cm.getLastGetRequest());
         assertNotNull(hist);
 

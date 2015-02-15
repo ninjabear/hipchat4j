@@ -105,7 +105,7 @@ public class Rooms {
         getRecentHistory(room, null, null);
     }
 
-    public MessageHistory getRecentHistory(String room, Integer maxResults, String notBefore) {
+    public MessageHistoryPage getRecentHistory(String room, Integer maxResults, String notBefore) {
         String qry = "/v2/room/"+room+"/history/latest/";
 
         if (maxResults!=null)
@@ -123,15 +123,15 @@ public class Rooms {
         }
 
         String resp = connector.get(qry);
-        return JsonParser.getInstance().fromJson(resp, MessageHistory.class);
+        return JsonParser.getInstance().fromJson(resp, MessageHistoryPage.class);
     }
 
-    public MessageHistory getHistory(String room)
+    public MessageHistoryPage getHistory(String room)
     {
         return getHistory(room, null, null, null, true);
     }
 
-    public MessageHistory getHistory(String room, String fromDate, Integer startIndex, Integer maxResults, boolean reverse)
+    public MessageHistoryPage getHistory(String room, String fromDate, Integer startIndex, Integer maxResults, boolean reverse)
     {
          int defaultedStartIndex = startIndex==null?0:startIndex,
                  defaultedMaxResults = maxResults==null?100:maxResults;
@@ -141,7 +141,7 @@ public class Rooms {
         if (fromDate!=null)
             qry += "&date="+fromDate;
 
-        return JsonParser.getInstance().fromJson(connector.get(qry), MessageHistory.class);
+        return JsonParser.getInstance().fromJson(connector.get(qry), MessageHistoryPage.class);
     }
 
     public MessagePayload getMessage(String room, String messageId)

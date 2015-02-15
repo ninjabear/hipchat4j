@@ -10,9 +10,9 @@ import java.util.ArrayList;
 import static org.apache.commons.io.IOUtils.readFully;
 import static org.junit.Assert.*;
 
-public class MessageHistoryTest {
+public class MessageHistoryPageTest {
 
-    private MessageHistory mh;
+    private MessageHistoryPage mh;
 
     @Before
     public void setUp() throws Exception {
@@ -24,7 +24,7 @@ public class MessageHistoryTest {
         items.add(m1);
         items.add(m2);
 
-        mh = new MessageHistory(items, 0, 100, new MessageHistory.Link("self", "prev", "next"));
+        mh = new MessageHistoryPage(items, 0, 100, new MessageHistoryPage.Link("self", "prev", "next"));
     }
 
     @Test
@@ -56,7 +56,7 @@ public class MessageHistoryTest {
     public void testFromJson() throws Exception {
         // i'm going to mix up the message types in this one
         String json = IOUtils.toString(this.getClass().getResourceAsStream("/message_history_sample.json"));
-        MessageHistory mhs = JsonParser.getInstance().fromJson(json, MessageHistory.class);
+        MessageHistoryPage mhs = JsonParser.getInstance().fromJson(json, MessageHistoryPage.class);
         assertNotNull(mhs);
 
         assertEquals(100, mhs.getMaxResults());

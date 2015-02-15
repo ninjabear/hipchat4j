@@ -6,7 +6,7 @@ import java.util.List;
  * hipchat4j / Ed
  * 15/02/2015 02:10
  */
-public class MessageHistory {
+public class MessageHistoryPage {
 
     public static class Link {
 
@@ -38,7 +38,7 @@ public class MessageHistory {
     private int maxResults;
     private Link links;
 
-    public MessageHistory(List<MessagePayload> items, int startIndex, int maxResults, Link links) {
+    public MessageHistoryPage(List<MessagePayload> items, int startIndex, int maxResults, Link links) {
         this.items = items;
         this.startIndex = startIndex;
         this.maxResults = maxResults;
