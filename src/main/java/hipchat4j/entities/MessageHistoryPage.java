@@ -8,31 +8,6 @@ import java.util.List;
  */
 public class MessageHistoryPage {
 
-    public static class Link {
-
-        private String self;
-        private String prev;
-        private String next;
-
-        public Link(String self, String prev, String next) {
-            this.self = self;
-            this.prev = prev;
-            this.next = next;
-        }
-
-        public String getSelf() {
-            return self;
-        }
-
-        public String getPrev() {
-            return prev;
-        }
-
-        public String getNext() {
-            return next;
-        }
-    }
-
     private List<MessagePayload> items;
     private int startIndex;
     private int maxResults;
@@ -59,6 +34,31 @@ public class MessageHistoryPage {
 
     public Link getLinks() {
         return links;
+    }
+
+    public static class Link {
+
+        private String self;
+        private String prev;
+        private String next;
+
+        public Link(String self, String prev, String next) {
+            this.self = self;
+            this.prev = prev;
+            this.next = next;
+        }
+
+        public String getSelf() {
+            return self;
+        }
+
+        public String getPrev() {
+            return prev;
+        }
+
+        public String getNext() {
+            return next;
+        }
     }
 
 }

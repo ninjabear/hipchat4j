@@ -1,10 +1,10 @@
 {
-   "name":"name",
-   "privacy":"private",
-   "is_archived":false,
-   "is_guest_accessible":false,
-   "topic":"mytopic",
-   "owner":{
-      "id":"555"
-   }
+  "name": "name",
+  "privacy": "private",
+  "is_archived": false,
+  "is_guest_accessible": false,
+  "topic": "mytopic",
+  "owner": {
+    "id": "555"
+  }
 }

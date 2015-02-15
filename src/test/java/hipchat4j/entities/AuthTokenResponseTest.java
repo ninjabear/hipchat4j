@@ -5,7 +5,7 @@ import org.apache.commons.io.IOUtils;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class AuthTokenResponseTest {
 
@@ -17,8 +17,7 @@ public class AuthTokenResponseTest {
     }
 
     @Test
-    public void testConstructor() throws Exception
-    {
+    public void testConstructor() throws Exception {
         AuthTokenResponse atresp = new AuthTokenResponse("accesstoken",
                 1234,
                 "mygroupname",

@@ -5,20 +5,20 @@ import org.apache.commons.io.IOUtils;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
 
 public class ServerCapabilityTest {
 
     private String jsonFromHipchatMain,
-                   jsonFullCrafted;
+            jsonFullCrafted;
     private ServerCapability capabilityFromHipchatMain;
 
     @Before
     public void setUp() throws Exception {
-       jsonFromHipchatMain =  IOUtils.toString(this.getClass().getResourceAsStream("/capabilities.json"));
-       jsonFullCrafted = null;
+        jsonFromHipchatMain = IOUtils.toString(this.getClass().getResourceAsStream("/capabilities.json"));
+        jsonFullCrafted = null;
 
-       capabilityFromHipchatMain = JsonParser.getInstance().fromJson(jsonFromHipchatMain, ServerCapability.class);
+        capabilityFromHipchatMain = JsonParser.getInstance().fromJson(jsonFromHipchatMain, ServerCapability.class);
 
     }
 

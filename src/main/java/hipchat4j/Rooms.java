@@ -19,43 +19,40 @@ public class Rooms {
         connector = c;
     }
 
-    public Room getRoom(int id)
-    {
-        return getRoom(""+id);
+    public Room getRoom(int id) {
+        return getRoom("" + id);
     }
 
     public Room getRoom(String name) {
-        String resp = connector.get("/v2/room/"+name);
+        String resp = connector.get("/v2/room/" + name);
         return JsonParser.getInstance().fromJson(resp, Room.class);
     }
 
     public RoomListPage getRooms(int start, int size, boolean includeArchived) {
-       return JsonParser.getInstance().fromJson(connector.get("/v2/room/?start-index="+start+"&max-results="+size+"&include-archived="+Boolean.valueOf(includeArchived).toString()),
-                                                RoomListPage.class);
+        return JsonParser.getInstance().fromJson(connector.get("/v2/room/?start-index=" + start + "&max-results=" + size + "&include-archived=" + Boolean.valueOf(includeArchived).toString()),
+                RoomListPage.class);
     }
 
-    public List<Room> getRooms(boolean includeArchived){
+    public List<Room> getRooms(boolean includeArchived) {
 
         final int blocksize = 500;
-        int currentpage=0;
+        int currentpage = 0;
         RoomListPage running;
         List<Room> rooms = new ArrayList<>();
 
         do {
-            running = getRooms(currentpage*blocksize, blocksize, includeArchived);
+            running = getRooms(currentpage * blocksize, blocksize, includeArchived);
             rooms.addAll(convertToRooms(running));
-            currentpage+=1;
-        } while (running.getItems().size()==blocksize);
+            currentpage += 1;
+        } while (running.getItems().size() == blocksize);
 
         return rooms;
     }
 
-    private List<Room> convertToRooms(RoomListPage rlp)
-    {
+    private List<Room> convertToRooms(RoomListPage rlp) {
         ArrayList<Room> rooms = new ArrayList<>();
 
-        for (RoomListPage.Item i : rlp.getItems())
-        {
+        for (RoomListPage.Item i : rlp.getItems()) {
             Room room = new Room(i.getId(), connector);
             rooms.add(room);
         }
@@ -64,8 +61,7 @@ public class Rooms {
 
     }
 
-    public String createRoom(String topic, boolean guestAccessPermitted, String name, String ownerUserId, String privacyMode)
-    {
+    public String createRoom(String topic, boolean guestAccessPermitted, String name, String ownerUserId, String privacyMode) {
         RoomCreateRequest roomCreateRequest;
         roomCreateRequest = new RoomCreateRequest(topic, guestAccessPermitted, name, ownerUserId, privacyMode);
         String postRequest = JsonParser.getInstance().toJson(roomCreateRequest);
@@ -79,25 +75,21 @@ public class Rooms {
     }
 
 
-    public void updateRoom(int id, String name, String privacyMode, boolean isArchived, boolean isGuestAccessible, String topic, String ownerId)
-    {
-        updateRoom(""+id, name, privacyMode, isArchived, isGuestAccessible, topic, ownerId);
+    public void updateRoom(int id, String name, String privacyMode, boolean isArchived, boolean isGuestAccessible, String topic, String ownerId) {
+        updateRoom("" + id, name, privacyMode, isArchived, isGuestAccessible, topic, ownerId);
     }
 
-    public void updateRoom(String room, String name, String privacyMode, boolean isArchived, boolean isGuestAccessible, String topic, String ownerId)
-    {
-       RoomUpdateRequest r = new RoomUpdateRequest(name, topic, privacyMode, isArchived, isGuestAccessible, ownerId);
-       connector.put("/v2/room/"+room, JsonParser.getInstance().toJson(r));
+    public void updateRoom(String room, String name, String privacyMode, boolean isArchived, boolean isGuestAccessible, String topic, String ownerId) {
+        RoomUpdateRequest r = new RoomUpdateRequest(name, topic, privacyMode, isArchived, isGuestAccessible, ownerId);
+        connector.put("/v2/room/" + room, JsonParser.getInstance().toJson(r));
     }
 
-    public void deleteRoom(int id)
-    {
-        deleteRoom(""+id);
+    public void deleteRoom(int id) {
+        deleteRoom("" + id);
     }
 
-    public void deleteRoom(String room)
-    {
-        connector.delete("/v2/room/"+room);
+    public void deleteRoom(String room) {
+        connector.delete("/v2/room/" + room);
     }
 
 
@@ -106,18 +98,16 @@ public class Rooms {
     }
 
     public MessageHistoryPage getRecentHistory(String room, Integer maxResults, String notBefore) {
-        String qry = "/v2/room/"+room+"/history/latest/";
+        String qry = "/v2/room/" + room + "/history/latest/";
 
-        if (maxResults!=null)
-            qry += "?max-results="+maxResults;
+        if (maxResults != null)
+            qry += "?max-results=" + maxResults;
 
-        if (notBefore!=null)
-        {
-            if (maxResults!=null)
-            {
-                qry += "&not-before="+notBefore;
+        if (notBefore != null) {
+            if (maxResults != null) {
+                qry += "&not-before=" + notBefore;
             } else {
-                qry += "?not-before="+notBefore;
+                qry += "?not-before=" + notBefore;
             }
 
         }
@@ -126,27 +116,24 @@ public class Rooms {
         return JsonParser.getInstance().fromJson(resp, MessageHistoryPage.class);
     }
 
-    public MessageHistoryPage getHistory(String room)
-    {
+    public MessageHistoryPage getHistory(String room) {
         return getHistory(room, null, null, null, true);
     }
 
-    public MessageHistoryPage getHistory(String room, String fromDate, Integer startIndex, Integer maxResults, boolean reverse)
-    {
-         int defaultedStartIndex = startIndex==null?0:startIndex,
-                 defaultedMaxResults = maxResults==null?100:maxResults;
+    public MessageHistoryPage getHistory(String room, String fromDate, Integer startIndex, Integer maxResults, boolean reverse) {
+        int defaultedStartIndex = startIndex == null ? 0 : startIndex,
+                defaultedMaxResults = maxResults == null ? 100 : maxResults;
 
-        String qry = "/v2/room/"+room+"/history/?start-index="+defaultedStartIndex+"&max-results="+defaultedMaxResults+"&reverse="+(reverse?"true":"false");
+        String qry = "/v2/room/" + room + "/history/?start-index=" + defaultedStartIndex + "&max-results=" + defaultedMaxResults + "&reverse=" + (reverse ? "true" : "false");
 
-        if (fromDate!=null)
-            qry += "&date="+fromDate;
+        if (fromDate != null)
+            qry += "&date=" + fromDate;
 
         return JsonParser.getInstance().fromJson(connector.get(qry), MessageHistoryPage.class);
     }
 
-    public MessagePayload getMessage(String room, String messageId)
-    {
-        String resp = connector.get("/v2/room/"+room+"/history/"+messageId);
+    public MessagePayload getMessage(String room, String messageId) {
+        String resp = connector.get("/v2/room/" + room + "/history/" + messageId);
         MessagePayload payload = JsonParser.getInstance().fromJson(resp, Message.class).getMessagePayload();
         return payload;
     }

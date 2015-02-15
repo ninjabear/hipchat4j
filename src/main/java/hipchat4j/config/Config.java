@@ -7,13 +7,13 @@ package hipchat4j.config;
 public class Config {
 
     private final String token,
-                         host;
+            host;
 
     public Config(String token, String host) {
-        if (token==null)
+        if (token == null)
             throw new IllegalArgumentException("invalid token: null");
 
-        if (host==null)
+        if (host == null)
             throw new IllegalArgumentException("invalid host: null");
 
         this.token = token;

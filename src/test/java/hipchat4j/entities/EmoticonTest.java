@@ -8,12 +8,12 @@ import static org.junit.Assert.*;
 
 public class EmoticonTest {
 
-    private Emoticon e,eNoAudio;
+    private Emoticon e, eNoAudio;
 
     @Before
     public void setUp() throws Exception {
-        e=new Emoticon(123, "keyorid", "ashortcut", 500, 900, "audiopath");
-        eNoAudio=new Emoticon(123, "keyorid", "ashortcut", 500, 900);
+        e = new Emoticon(123, "keyorid", "ashortcut", 500, 900, "audiopath");
+        eNoAudio = new Emoticon(123, "keyorid", "ashortcut", 500, 900);
     }
 
     @Test
@@ -28,7 +28,7 @@ public class EmoticonTest {
 
     @Test
     public void testGetWidth() throws Exception {
-        assertEquals(500, e.getWidth().longValue() );
+        assertEquals(500, e.getWidth().longValue());
     }
 
     @Test
@@ -48,8 +48,7 @@ public class EmoticonTest {
     }
 
     @Test
-    public void testFromJson() throws Exception
-    {
+    public void testFromJson() throws Exception {
         String eAsJson = JsonParser.getInstance().toJson(e);
         Emoticon fromJson = JsonParser.getInstance().fromJson(eAsJson, Emoticon.class);
 

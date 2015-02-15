@@ -10,7 +10,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class AuthTokenRequestTest {
 
@@ -34,7 +35,7 @@ public class AuthTokenRequestTest {
         assertEquals("A B  D", AuthTokenRequest.listToSpaceSeparated(abemptyd)); // a b space d
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testListToSpaceSeparatedNullElement() throws Exception {
         List<String> abc = Arrays.asList("A", "B", null, "D");
         AuthTokenRequest.listToSpaceSeparated(abc);
@@ -47,8 +48,7 @@ public class AuthTokenRequestTest {
     }
 
     @Test
-    public void testFromJson()
-    {
+    public void testFromJson() {
         AuthTokenRequest atr = JsonParser.getInstance().fromJson(expectedJsonOutput, AuthTokenRequest.class);
         assertEquals("ausername", atr.getUsername());
         assertEquals("authorization_code", atr.getGrantType());
@@ -62,8 +62,7 @@ public class AuthTokenRequestTest {
 
 
     @Test
-    public void testFromJsonMin()
-    {
+    public void testFromJsonMin() {
         AuthTokenRequest atr = JsonParser.getInstance().fromJson(getExpectedJsonOutputMin, AuthTokenRequest.class);
         assertNull(atr.getUsername());
         assertEquals("password", atr.getGrantType());
@@ -76,8 +75,7 @@ public class AuthTokenRequestTest {
     }
 
     @Test
-    public void testConstructorAndGetters()
-    {
+    public void testConstructorAndGetters() {
         AuthTokenRequest r = new AuthTokenRequest("a", "b", "c", "d", Arrays.asList("e"), "f", "h");
 
         assertEquals("a", r.getUsername());

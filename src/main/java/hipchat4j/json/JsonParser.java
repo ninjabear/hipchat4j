@@ -12,24 +12,22 @@ public class JsonParser {
     private Gson gson = new Gson();
 
 
-    private JsonParser() {}
+    private JsonParser() {
+    }
 
-    public static JsonParser getInstance()
-    {
-        if (null==me)
+    public static JsonParser getInstance() {
+        if (null == me)
             me = new JsonParser();
 
         return me;
     }
 
 
-    public String toJson(Object val)
-    {
+    public String toJson(Object val) {
         return gson.toJson(val);
     }
 
-    public <T> T fromJson(String json, Class<T> type)
-    {
+    public <T> T fromJson(String json, Class<T> type) {
         return gson.fromJson(json, type);
     }
 

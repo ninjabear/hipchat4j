@@ -1,7 +1,6 @@
 package hipchat4j;
 
 import hipchat4j.config.Config;
-import hipchat4j.connector.ConnectorAbstract;
 import hipchat4j.connector.ConnectorMock;
 import hipchat4j.entities.AuthTokenRequest;
 import hipchat4j.entities.AuthTokenResponse;
@@ -13,7 +12,8 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class OAuthTest {
 
@@ -25,7 +25,7 @@ public class OAuthTest {
     @Before
     public void setUp() throws IOException {
         cm = new ConnectorMock(new Config("hello", "world"));
-        oauth=new OAuth(cm);
+        oauth = new OAuth(cm);
         responseJson = IOUtils.toString(getClass().getResourceAsStream("/authrequest_response.json"));
     }
 
@@ -43,37 +43,37 @@ public class OAuthTest {
     }
 
 
-    @Test ( expected = IllegalArgumentException.class )
+    @Test(expected = IllegalArgumentException.class)
     public void testGenerateTokenNoType() throws Exception {
-        oauth.generateToken(null,null,null,null,null,null,null);
+        oauth.generateToken(null, null, null, null, null, null, null);
     }
 
 
-    @Test ( expected = IllegalArgumentException.class )
+    @Test(expected = IllegalArgumentException.class)
     public void testGenerateTokenNoTypeShort() throws Exception {
         oauth.generateToken(null);
     }
 
-    @Test ( expected = IllegalArgumentException.class )
+    @Test(expected = IllegalArgumentException.class)
     public void testGenerateAuthCodeNoAuthType() throws Exception {
         oauth.generateToken(null,
-                            OAuth.GrantRequestType.Personal,
-                            "acode",
-                            null,
-                            null,
-                            null,
-                            null);
+                OAuth.GrantRequestType.Personal,
+                "acode",
+                null,
+                null,
+                null,
+                null);
     }
 
-    @Test ( expected = IllegalArgumentException.class )
+    @Test(expected = IllegalArgumentException.class)
     public void testGenerateRedirectURINoAuthType() throws Exception {
         oauth.generateToken(null,
-                            OAuth.GrantRequestType.Personal,
-                            null,
-                            "http://somewhere.com/?",
-                            null,
-                            null,
-                            null);
+                OAuth.GrantRequestType.Personal,
+                null,
+                "http://somewhere.com/?",
+                null,
+                null,
+                null);
     }
 
     @Test
@@ -84,15 +84,13 @@ public class OAuthTest {
         assertEquals(OAuth.GrantRequestType.Personal.toString(), atr.getGrantType());
     }
 
-    @Test (expected = IllegalArgumentException.class )
-    public void testGrantRequestTypeNull() throws Exception
-    {
+    @Test(expected = IllegalArgumentException.class)
+    public void testGrantRequestTypeNull() throws Exception {
         OAuth.GrantRequestType.convertToAPI(null);
     }
 
     @Test
-    public void testGetTokenResponse() throws Exception
-    {
+    public void testGetTokenResponse() throws Exception {
         cm.addResponseMapping("/v2/oauth/token", "200", responseJson);
         AuthTokenResponse r = oauth.generateToken(OAuth.GrantRequestType.Personal);
         assertEquals("anaccesstoken", r.getAccessToken());

@@ -1,7 +1,7 @@
 {
-   "topic":"topic",
-   "guest_access":true,
-   "name":"name",
-   "owner_user_id":"123",
-   "privacy":"public"
+  "topic": "topic",
+  "guest_access": true,
+  "name": "name",
+  "owner_user_id": "123",
+  "privacy": "public"
 }

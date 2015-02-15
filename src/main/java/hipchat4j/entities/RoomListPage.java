@@ -8,7 +8,57 @@ import java.util.List;
  */
 public class RoomListPage {
 
+    private List<Item> items;
+    private int startIndex;
+    private int maxResults;
+    private Links links;
+
+    public RoomListPage(List<Item> items, int startIndex, int maxResults, Links links) {
+        this.items = items;
+        this.startIndex = startIndex;
+        this.maxResults = maxResults;
+        this.links = links;
+    }
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public int getStartIndex() {
+        return startIndex;
+    }
+
+    public Links getLinks() {
+        return links;
+    }
+
+    public int getMaxResults() {
+        return maxResults;
+    }
+
     public static class Item {
+        private int id;
+        private Links links;
+        private String name;
+
+        public Item(int id, Links links, String name) {
+            this.id = id;
+            this.links = links;
+            this.name = name;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public Links getLinks() {
+            return links;
+        }
+
+        public String getName() {
+            return name;
+        }
+
         public static class Links {
 
             private String self;
@@ -39,28 +89,6 @@ public class RoomListPage {
                 return members;
             }
         }
-
-        private int id;
-        private Links links;
-        private String name;
-
-        public Item(int id, Links links, String name) {
-            this.id = id;
-            this.links = links;
-            this.name = name;
-        }
-
-        public int getId() {
-            return id;
-        }
-
-        public Links getLinks() {
-            return links;
-        }
-
-        public String getName() {
-            return name;
-        }
     }
 
     public static class Links {
@@ -85,35 +113,5 @@ public class RoomListPage {
         public String getNext() {
             return next;
         }
-    }
-
-
-    private List<Item> items;
-    private int startIndex;
-    private int maxResults;
-    private Links links;
-
-    public RoomListPage(List<Item> items, int startIndex, int maxResults, Links links) {
-        this.items = items;
-        this.startIndex = startIndex;
-        this.maxResults = maxResults;
-        this.links = links;
-    }
-
-
-    public List<Item> getItems() {
-        return items;
-    }
-
-    public int getStartIndex() {
-        return startIndex;
-    }
-
-    public Links getLinks() {
-        return links;
-    }
-
-    public int getMaxResults() {
-        return maxResults;
     }
 }

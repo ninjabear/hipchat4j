@@ -19,6 +19,29 @@ public class EmoticonListPage {
     @SerializedName("startIndex")
     private int startIndex;
 
+    public EmoticonListPage(List<Item> items, int startIndex, int maxResults, Link links) {
+        this.items = items;
+        this.startIndex = startIndex;
+        this.maxResults = maxResults;
+        this.links = links;
+    }
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public int getStartIndex() {
+        return startIndex;
+    }
+
+    public Link getLinks() {
+        return links;
+    }
+
+    public int getMaxResults() {
+        return maxResults;
+    }
+
     public static class Item {
 
         @SerializedName("id")
@@ -82,30 +105,6 @@ public class EmoticonListPage {
         public String getNext() {
             return next;
         }
-    }
-
-
-    public EmoticonListPage(List<Item> items, int startIndex, int maxResults, Link links) {
-        this.items = items;
-        this.startIndex = startIndex;
-        this.maxResults = maxResults;
-        this.links = links;
-    }
-
-    public List<Item> getItems() {
-        return items;
-    }
-
-    public int getStartIndex() {
-        return startIndex;
-    }
-
-    public Link getLinks() {
-        return links;
-    }
-
-    public int getMaxResults() {
-        return maxResults;
     }
 
 }

@@ -8,15 +8,6 @@ import com.google.gson.annotations.SerializedName;
  */
 public class RoomUpdateRequest {
 
-    public static class Owner {
-        private String id;
-
-        public Owner(String id) {
-            this.id = id;
-        }
-    }
-
-
     private String name;
     private String privacy;
     @SerializedName("is_archived")
@@ -52,10 +43,18 @@ public class RoomUpdateRequest {
     }
 
     public String getOwnerId() {
-        return owner==null?null:owner.id;
+        return owner == null ? null : owner.id;
     }
 
     public String getTopic() {
         return topic;
+    }
+
+    public static class Owner {
+        private String id;
+
+        public Owner(String id) {
+            this.id = id;
+        }
     }
 }

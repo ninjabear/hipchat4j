@@ -11,7 +11,6 @@ import org.junit.Test;
 import java.util.List;
 
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
 
 public class RoomsTest {
 
@@ -54,7 +53,7 @@ public class RoomsTest {
         assertEquals("/v2/room/?start-index=500&max-results=500&include-archived=true", cm.getLastGetRequest()); // page 2
 
         assertNotNull(roomList);
-        assertNotEquals(0,  roomList.size() );
+        assertNotEquals(0, roomList.size());
         assertEquals(1, roomList.get(0).getId());
         assertEquals(501, roomList.size());
     }
@@ -71,8 +70,7 @@ public class RoomsTest {
     }
 
     @Test
-    public void createRoomShort() throws Exception
-    {
+    public void createRoomShort() throws Exception {
         String jsonResponse = IOUtils.toString(this.getClass().getResourceAsStream("/create_room_response.json"));
         cm.addResponseMapping("/v2/room", "200", jsonResponse);
         String resp = rooms.createRoom("aname");
@@ -89,12 +87,11 @@ public class RoomsTest {
     }
 
     @Test
-    public void createRoomFull() throws Exception
-    {
+    public void createRoomFull() throws Exception {
         cm.addResponseMapping("/v2/room", "200", IOUtils.toString(this.getClass().getResourceAsStream("/create_room_response.json")));
 
-         String resp = rooms.createRoom("topic", true, "aroom", "123", "private" );
-         assertEquals("/v2/room", cm.getLastPostRequest());
+        String resp = rooms.createRoom("topic", true, "aroom", "123", "private");
+        assertEquals("/v2/room", cm.getLastPostRequest());
 
         assertEquals("123", resp);
         RoomCreateRequest roomRequest = JsonParser.getInstance().fromJson(cm.getLastPostParam(), RoomCreateRequest.class);

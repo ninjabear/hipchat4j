@@ -9,7 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static hipchat4j.entities.RoomListPage.Item;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class RoomListPageTest {
 
@@ -19,9 +20,8 @@ public class RoomListPageTest {
     public void setUp() throws Exception {
         List<Item> lst = new ArrayList<>();
         lst.add(new Item(55,
-                        new RoomListPage.Item.Links("itemself", "itempwebhooks", "itemmembers", "itemparticipants"),
-                        "itemname") );
-
+                new RoomListPage.Item.Links("itemself", "itempwebhooks", "itemmembers", "itemparticipants"),
+                "itemname"));
 
 
         rlp = new RoomListPage(lst, 0, 100, new RoomListPage.Links("self", "prev", "next"));
@@ -47,9 +47,9 @@ public class RoomListPageTest {
 
     @Test
     public void testGetLinks() throws Exception {
-       assertEquals("self", rlp.getLinks().getSelf());
-       assertEquals("prev", rlp.getLinks().getPrev());
-       assertEquals("next", rlp.getLinks().getNext());
+        assertEquals("self", rlp.getLinks().getSelf());
+        assertEquals("prev", rlp.getLinks().getPrev());
+        assertEquals("next", rlp.getLinks().getNext());
     }
 
     @Test

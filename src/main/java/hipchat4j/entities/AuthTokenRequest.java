@@ -31,9 +31,8 @@ public class AuthTokenRequest {
         this.refreshToken = refreshToken;
     }
 
-    public static String listToSpaceSeparated(List<String> list)
-    {
-        if (list==null||list.size()==0)
+    public static String listToSpaceSeparated(List<String> list) {
+        if (list == null || list.size() == 0)
             return null;
 
         if (list.contains(null))

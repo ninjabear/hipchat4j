@@ -8,7 +8,8 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class SessionTest {
 
@@ -19,7 +20,7 @@ public class SessionTest {
     public void setUp() throws Exception {
 
         Session.Client.Room r = new Session.Client.Room(55, "AROOM", new Session.Client.Room.Links("self", "webhooks", "members", "participants"));
-        Session.Client c = new Session.Client(r, "clientid", Arrays.asList("12","13"), "clientname");
+        Session.Client c = new Session.Client(r, "clientid", Arrays.asList("12", "13"), "clientname");
         Session.Owner o = new Session.Owner("mentionanme", 32, "a realname", new Session.Owner.Links("self"));
 
         exampleSession = new Session(c, "token", Arrays.asList("scope1", "scope2"), 123, o, "type");
@@ -85,7 +86,7 @@ public class SessionTest {
 
     @Test
     public void testGetOwnerType() throws Exception {
-       assertEquals("type", exampleSession.getOwnerType());
+        assertEquals("type", exampleSession.getOwnerType());
     }
 
     @Test

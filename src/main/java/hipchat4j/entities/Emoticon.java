@@ -31,25 +31,24 @@ public class Emoticon {
     private ConnectorAbstract lazyLoad;
 
 
-    public Emoticon(int id, String keyOrId, ConnectorAbstract lazyLoad)
-    {
+    public Emoticon(int id, String keyOrId, ConnectorAbstract lazyLoad) {
         // lazy load constructor
-        this.id=id;
-        this.keyOrId=keyOrId;
+        this.id = id;
+        this.keyOrId = keyOrId;
 
-        this.shortcut=null;
-        this.audioPath=null;
-        this.width=null;
-        this.height=null;
+        this.shortcut = null;
+        this.audioPath = null;
+        this.width = null;
+        this.height = null;
 
-        this.lazyLoad=lazyLoad;
+        this.lazyLoad = lazyLoad;
     }
 
-    public Emoticon(int id, String keyOrId, String shortcut, int width,  int height) {
+    public Emoticon(int id, String keyOrId, String shortcut, int width, int height) {
         this(id, keyOrId, shortcut, width, height, null);
     }
 
-    public Emoticon(int id, String keyOrId, String shortcut, int width,  int height, String audioPath) {
+    public Emoticon(int id, String keyOrId, String shortcut, int width, int height, String audioPath) {
         this.keyOrId = keyOrId;
         this.shortcut = shortcut;
         this.width = width;
@@ -59,18 +58,17 @@ public class Emoticon {
     }
 
     private void load() {
-        if (height==null||width==null||shortcut==null)
-        {
-            if (lazyLoad==null)
+        if (height == null || width == null || shortcut == null) {
+            if (lazyLoad == null)
                 throw new IllegalStateException("missing data but no lazy loader");
 
-            String asJson = lazyLoad.get("/v2/emoticon/"+this.id);
+            String asJson = lazyLoad.get("/v2/emoticon/" + this.id);
             Emoticon loaded = JsonParser.getInstance().fromJson(asJson, Emoticon.class);
-            this.width=loaded.getWidth();
-            this.height=loaded.getHeight();
-            this.shortcut=loaded.getShortcut();
-            this.audioPath=loaded.getAudioPath();
-            this.keyOrId=loaded.getKeyOrId();
+            this.width = loaded.getWidth();
+            this.height = loaded.getHeight();
+            this.shortcut = loaded.getShortcut();
+            this.audioPath = loaded.getAudioPath();
+            this.keyOrId = loaded.getKeyOrId();
         }
     }
 
@@ -85,7 +83,7 @@ public class Emoticon {
 
     public String getShortcut() {
 
-        if (shortcut==null)
+        if (shortcut == null)
             load();
 
         return shortcut;
@@ -93,7 +91,7 @@ public class Emoticon {
 
     public Integer getWidth() {
 
-        if (width==null)
+        if (width == null)
             load();
 
         return width;
@@ -101,7 +99,7 @@ public class Emoticon {
 
     public Integer getHeight() {
 
-        if (height==null)
+        if (height == null)
             load();
 
         return height;
@@ -110,28 +108,27 @@ public class Emoticon {
 
     public String getAudioPath() {
 
-        if (audioPath==null)
+        if (audioPath == null)
             load();
 
         return audioPath;
     }
 
     @Override
-    public boolean equals(Object o)
-    {
-        if (null==o)
+    public boolean equals(Object o) {
+        if (null == o)
             return false;
 
         if (!(o instanceof Emoticon))
             return false;
 
-        Emoticon e = (Emoticon)o;
+        Emoticon e = (Emoticon) o;
 
-        boolean audioOK = (this.getAudioPath()==null && e.getAudioPath()==null) || (this.getAudioPath()!=null && this.getAudioPath().equals(e.getAudioPath())),
-                idOK = this.getId()==e.getId(),
+        boolean audioOK = (this.getAudioPath() == null && e.getAudioPath() == null) || (this.getAudioPath() != null && this.getAudioPath().equals(e.getAudioPath())),
+                idOK = this.getId() == e.getId(),
                 keyOrIdOK = this.getKeyOrId().equals(e.getKeyOrId()),
-                widthOK = (this.getWidth() == null && e.getWidth() == null ) || (this.getWidth()!=null && this.getWidth().equals(e.getWidth())),
-                heightOK = (this.getHeight() == null && e.getHeight() == null ) || (this.getHeight()!=null && this.getHeight().equals(e.getHeight())),
+                widthOK = (this.getWidth() == null && e.getWidth() == null) || (this.getWidth() != null && this.getWidth().equals(e.getWidth())),
+                heightOK = (this.getHeight() == null && e.getHeight() == null) || (this.getHeight() != null && this.getHeight().equals(e.getHeight())),
                 shortcutOK = this.getShortcut().equals(e.getShortcut());
 
         return audioOK && idOK && keyOrIdOK && widthOK && heightOK && shortcutOK;

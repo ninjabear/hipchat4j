@@ -1,7 +1,6 @@
 package hipchat4j.entities;
 
 import hipchat4j.config.Config;
-import hipchat4j.connector.Connector;
 import hipchat4j.connector.ConnectorMock;
 import hipchat4j.json.JsonParser;
 import org.apache.commons.io.IOUtils;
@@ -11,31 +10,32 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class RoomTest {
 
-    private Room r,lazyLoaderRoom;
+    private Room r, lazyLoaderRoom;
     private ConnectorMock cm;
 
     @Before
     public void setUp() throws Exception {
-       r = new Room("xmppjid",
-                    new Room.Statistics(new Room.Statistics.Links("stats_self")),
-                    new Room.Links("roomself","roomwebhooks", "roommembers", "roomparticipants"),
-                    "roomname",
-                    false,
-                    "createdstr",
-                    "privacystr",
-                    false,
-                    "atopic",
-                    Arrays.asList(new Room.Participant("ninjabear", 99, new Room.Participant.Links("selfpart"), "fullname")),
-                    new Room.Owner("ninja", 13, new Room.Owner.Links("self"), "ninja test"),
-                    555,
-                    "http://somewhere/guest"
-                   );
+        r = new Room("xmppjid",
+                new Room.Statistics(new Room.Statistics.Links("stats_self")),
+                new Room.Links("roomself", "roomwebhooks", "roommembers", "roomparticipants"),
+                "roomname",
+                false,
+                "createdstr",
+                "privacystr",
+                false,
+                "atopic",
+                Arrays.asList(new Room.Participant("ninjabear", 99, new Room.Participant.Links("selfpart"), "fullname")),
+                new Room.Owner("ninja", 13, new Room.Owner.Links("self"), "ninja test"),
+                555,
+                "http://somewhere/guest"
+        );
 
-        cm = new ConnectorMock(new Config("hello","world"));
+        cm = new ConnectorMock(new Config("hello", "world"));
         cm.addResponseMapping("/v2/room/999", "200", IOUtils.toString(this.getClass().getResourceAsStream("/room_full.json")));
         lazyLoaderRoom = new Room(999, cm);
     }

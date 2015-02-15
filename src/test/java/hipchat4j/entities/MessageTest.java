@@ -3,7 +3,9 @@ package hipchat4j.entities;
 import hipchat4j.json.JsonParser;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 public class MessageTest {
 

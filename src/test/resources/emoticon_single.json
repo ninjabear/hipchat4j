@@ -1,18 +1,18 @@
 {
-   "creator":{
-      "id":26,
-      "links":{
-         "self":"https://api.hipchat.com/v2/user/26"
-      },
-      "mention_name":"Pete",
-      "name":"Pete (\u256f\u00b0\u25a1\u00b0) \u256f"
-   },
-   "height":30,
-   "id":260,
-   "links":{
-      "self":"https://api.hipchat.com/v2/emoticon/260"
-   },
-   "shortcut":"allthethings",
-   "url":"https://dujrsrsgsd3nh.cloudfront.net/img/emoticons/allthethings.png",
-   "width":36
+  "creator": {
+    "id": 26,
+    "links": {
+      "self": "https://api.hipchat.com/v2/user/26"
+    },
+    "mention_name": "Pete",
+    "name": "Pete (\u256f\u00b0\u25a1\u00b0) \u256f"
+  },
+  "height": 30,
+  "id": 260,
+  "links": {
+    "self": "https://api.hipchat.com/v2/emoticon/260"
+  },
+  "shortcut": "allthethings",
+  "url": "https://dujrsrsgsd3nh.cloudfront.net/img/emoticons/allthethings.png",
+  "width": 36
 }

@@ -6,18 +6,6 @@ package hipchat4j.entities;
  */
 public class RoomCreateResponse {
 
-    public static class Links {
-        private String self;
-
-        public Links(String self) {
-            this.self = self;
-        }
-
-        public String getSelf() {
-            return self;
-        }
-    }
-
     private String id;
     private Links links;
 
@@ -32,5 +20,17 @@ public class RoomCreateResponse {
 
     public String getId() {
         return id;
+    }
+
+    public static class Links {
+        private String self;
+
+        public Links(String self) {
+            this.self = self;
+        }
+
+        public String getSelf() {
+            return self;
+        }
     }
 }

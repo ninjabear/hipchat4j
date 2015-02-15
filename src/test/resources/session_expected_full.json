@@ -1,35 +1,35 @@
 {
-   "scopes":[
-      "scope1",
-      "scope2"
-   ],
-   "access_token":"atoken",
-   "expires_in":456,
-   "client":{
-      "room":{
-         "id":1234,
-         "links":{
-            "self":"self",
-            "webhooks":"webhooks",
-            "members":"members",
-            "participants":"participants"
-         },
-         "name":"aname"
+  "scopes": [
+    "scope1",
+    "scope2"
+  ],
+  "access_token": "atoken",
+  "expires_in": 456,
+  "client": {
+    "room": {
+      "id": 1234,
+      "links": {
+        "self": "self",
+        "webhooks": "webhooks",
+        "members": "members",
+        "participants": "participants"
       },
-      "id":99,
-      "allowed_scopes":[
-         "scopex",
-         "scopey"
-      ],
-      "name":"roomname"
-   },
-   "owner":{
-      "mention_name":"mentionname",
-      "id":55,
-      "links":{
-         "self":"selflink"
-      },
-      "name":"ownername"
-   },
-   "owner_type":"ownertype"
+      "name": "aname"
+    },
+    "id": 99,
+    "allowed_scopes": [
+      "scopex",
+      "scopey"
+    ],
+    "name": "roomname"
+  },
+  "owner": {
+    "mention_name": "mentionname",
+    "id": 55,
+    "links": {
+      "self": "selflink"
+    },
+    "name": "ownername"
+  },
+  "owner_type": "ownertype"
 }

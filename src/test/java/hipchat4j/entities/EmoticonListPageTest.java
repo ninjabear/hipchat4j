@@ -9,8 +9,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
-import static java.nio.file.Paths.*;
-import static org.junit.Assert.*;
+import static java.nio.file.Paths.get;
+import static org.junit.Assert.assertEquals;
 
 public class EmoticonListPageTest {
 
@@ -31,12 +31,12 @@ public class EmoticonListPageTest {
     }
 
     @Test
-    public void toJsonSample() throws  Exception {
+    public void toJsonSample() throws Exception {
 
         ArrayList<EmoticonListPage.Item> a = new ArrayList<>();
         a.add(new EmoticonListPage.Item(123, new EmoticonListPage.Link("self", "", ""), "shortcut", "url"));
 
-        EmoticonListPage elp = new EmoticonListPage(a, 0, 100, new EmoticonListPage.Link("self","prev", "next"));
+        EmoticonListPage elp = new EmoticonListPage(a, 0, 100, new EmoticonListPage.Link("self", "prev", "next"));
         String jsonout = JsonParser.getInstance().toJson(elp);
         EmoticonListPage back = JsonParser.getInstance().fromJson(jsonout, EmoticonListPage.class);
 

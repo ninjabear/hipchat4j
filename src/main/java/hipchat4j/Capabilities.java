@@ -17,8 +17,7 @@ public class Capabilities {
     }
 
 
-    public ServerCapability getCapabilities()
-    {
+    public ServerCapability getCapabilities() {
         String capabilitiesJson = connector.get("/v2/capabilities");
         return JsonParser.getInstance().fromJson(capabilitiesJson, ServerCapability.class);
     }

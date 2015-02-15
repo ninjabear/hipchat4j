@@ -40,15 +40,13 @@ public class Emoticons {
         return emoticons;
     }
 
-    private List<Emoticon> parsePageForEmoticons(EmoticonListPage page)
-    {
+    private List<Emoticon> parsePageForEmoticons(EmoticonListPage page) {
         final List<Emoticon> acc = new ArrayList<>();
         //(int id, String keyOrId, String shortcut, int width,  int height, String audioPath)
-        for (EmoticonListPage.Item i : page.getItems())
-        {
+        for (EmoticonListPage.Item i : page.getItems()) {
             Emoticon e = new Emoticon(i.getId(),
                     Integer.toString(i.getId()),
-                                     connector);
+                    connector);
             acc.add(e);
         }
         return acc;

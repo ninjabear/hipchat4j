@@ -25,7 +25,7 @@ public class EmoticonsTest {
         cm = new ConnectorMock(conf);
 
         emoticons = new Emoticons(cm);
-        resp = new Emoticon(123, "123", "ashortcut",800, 600);
+        resp = new Emoticon(123, "123", "ashortcut", 800, 600);
         String jsonresp = JsonParser.getInstance().toJson(resp);
 
         cm.addResponseMapping("/v2/emoticon/123", "200", jsonresp);
@@ -44,7 +44,7 @@ public class EmoticonsTest {
     @Test
     public void testGetAllEmoticons() throws Exception {
         List<Emoticon> lst = emoticons.getEmoticons();
-        if ( lst == null || lst.size() == 0)
+        if (lst == null || lst.size() == 0)
             fail("no emoticons returned");
         /*
          "id":260,

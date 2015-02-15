@@ -5,7 +5,8 @@ import org.apache.commons.io.IOUtils;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class RoomCreateResponseTest {
 
@@ -30,7 +31,7 @@ public class RoomCreateResponseTest {
     public void testFromJSON() throws Exception {
         RoomCreateResponse rc = JsonParser.getInstance().fromJson(IOUtils.toString(this.getClass().getResourceAsStream("/create_room_response.json")), RoomCreateResponse.class);
         assertNotNull(rc);
-        assertEquals("self",rc.getLinks().getSelf());
+        assertEquals("self", rc.getLinks().getSelf());
         assertEquals("123", rc.getId());
     }
 }

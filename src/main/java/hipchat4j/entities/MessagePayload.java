@@ -3,8 +3,6 @@ package hipchat4j.entities;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.internal.LinkedTreeMap;
 
-import java.util.Map;
-
 /**
  * hipchat4j
  * 26/10/14/17:47
@@ -15,24 +13,152 @@ public class MessagePayload {
      * https://www.hipchat.com/docs/apiv2/method/get_room_message
      */
 
+    private Object from;
+    @SerializedName("message_links")
+    private MessageLinks messageLinks;
+    private File file;
+    private Mentions mentions;
+    @SerializedName("message_format")
+    private String messageFormat;
+    private String color;
+    private String date;
+    private String id;
+    private String message;
+    private String type;
+
+    public MessagePayload(String from, String messageFormat, String color, String date, Mentions mentions, String message, String type, String id) {
+        this.from = from;
+        this.color = color;
+        this.messageFormat = messageFormat;
+        this.date = date;
+        this.mentions = mentions;
+        this.message = message;
+        this.type = type;
+        this.id = id;
+    }
+
+    public MessagePayload(From from, MessageLinks messageLinks, File file, String date, Mentions mentions, String message, String type, String id) {
+        this.from = from;
+        this.messageLinks = messageLinks;
+        this.file = file;
+        this.mentions = mentions;
+        this.message = message;
+        this.type = type;
+        this.id = id;
+        this.date = date;
+    }
+
+    public MessageType getMessageType() {
+
+        try {
+            String test = (String) this.from;
+        } catch (ClassCastException e) {
+            return MessageType.FromUser;
+        }
+
+        return MessageType.FromAddOn;
+    }
+
+    private From buildFromObject(LinkedTreeMap<String, Object> from) {
+        return new From(from.get("mention_name").toString(),
+                ((Double) from.get("id")).intValue(),
+                new From.Links(((LinkedTreeMap<String, Object>) from.get("links")).get("self").toString()),
+                from.get("name").toString());
+    }
+
+    public From getFrom() {
+        if (MessageType.FromAddOn.equals(getMessageType())) {
+            return null;
+        }
+
+        try {
+            LinkedTreeMap<String, Object> tree = (LinkedTreeMap<String, Object>) this.from;
+            return buildFromObject(tree);
+        } catch (ClassCastException e) {
+
+        }
+
+        try {
+            return (From) from;
+        } catch (ClassCastException e) {
+
+        }
+
+        throw new IllegalStateException("can't work out from type");
+    }
+
+    public String getFromName() {
+        if (MessageType.FromAddOn.equals(getMessageType())) {
+            return (String) from;
+        }
+
+        try {
+            LinkedTreeMap<String, Object> tree = (LinkedTreeMap<String, Object>) this.from;
+            return buildFromObject(tree).getName();
+        } catch (ClassCastException e) {
+
+        }
+
+        try {
+            From f = (From) from;
+            return f.getName();
+        } catch (ClassCastException e) {
+
+        }
+
+        throw new IllegalStateException("can't work out from type");
+    }
+
+    public MessageLinks.TwitterUser getTwitterUser() {
+
+        if (MessageType.FromAddOn.equals(getMessageType()))
+            return null;
+
+        return this.messageLinks.getTwitterUser();
+    }
+
+    public MessageLinks getMessageLinks() {
+        return messageLinks;
+    }
+
+    public File getFile() {
+        return file;
+    }
+
+    public Mentions getMentions() {
+        return mentions;
+    }
+
+    public String getMessageFormat() {
+        return messageFormat;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public String getType() {
+        return type;
+    }
+
     public enum MessageType {
         FromAddOn,
         FromUser
     }
 
     public static class From {
-
-        public static class Links {
-            private String self;
-
-            public Links(String self) {
-                this.self = self;
-            }
-
-            public String getSelf() {
-                return self;
-            }
-        }
 
         @SerializedName("mention_name")
         private String mentionName;
@@ -62,9 +188,69 @@ public class MessagePayload {
         public Links getLinks() {
             return links;
         }
+
+        public static class Links {
+            private String self;
+
+            public Links(String self) {
+                this.self = self;
+            }
+
+            public String getSelf() {
+                return self;
+            }
+        }
     }
 
     public static class MessageLinks {
+
+        @SerializedName("twitter_user")
+        private TwitterUser twitterUser;
+        private String url;
+        private Image image;
+        @SerializedName("twitter_status")
+        private TwitterStatus twitterStatus;
+        private Video video;
+        private Link link;
+        private String type;
+
+        public MessageLinks(TwitterUser twitterUser, String url, Image image, TwitterStatus twitterStatus, Video video, Link link, String type) {
+            this.twitterUser = twitterUser;
+            this.url = url;
+            this.image = image;
+            this.twitterStatus = twitterStatus;
+            this.video = video;
+            this.link = link;
+            this.type = type;
+        }
+
+        public TwitterUser getTwitterUser() {
+            return twitterUser;
+        }
+
+        public String getUrl() {
+            return url;
+        }
+
+        public Image getImage() {
+            return image;
+        }
+
+        public TwitterStatus getTwitterStatus() {
+            return twitterStatus;
+        }
+
+        public Video getVideo() {
+            return video;
+        }
+
+        public Link getLink() {
+            return link;
+        }
+
+        public String getType() {
+            return type;
+        }
 
         public static class TwitterUser {
             private int followers;
@@ -102,7 +288,7 @@ public class MessagePayload {
 
             public Image(String image, String name) {
                 this.image = image;
-                this.name=name;
+                this.name = name;
             }
 
             public String getImage() {
@@ -227,56 +413,6 @@ public class MessagePayload {
                 return faviconUrl;
             }
         }
-
-
-
-        @SerializedName("twitter_user")
-        private TwitterUser twitterUser;
-        private String url;
-        private Image image;
-        @SerializedName("twitter_status")
-        private TwitterStatus twitterStatus;
-        private Video video;
-        private Link link;
-        private String type;
-
-        public MessageLinks(TwitterUser twitterUser, String url, Image image, TwitterStatus twitterStatus, Video video, Link link, String type) {
-            this.twitterUser = twitterUser;
-            this.url = url;
-            this.image = image;
-            this.twitterStatus = twitterStatus;
-            this.video = video;
-            this.link = link;
-            this.type = type;
-        }
-
-        public TwitterUser getTwitterUser() {
-            return twitterUser;
-        }
-
-        public String getUrl() {
-            return url;
-        }
-
-        public Image getImage() {
-            return image;
-        }
-
-        public TwitterStatus getTwitterStatus() {
-            return twitterStatus;
-        }
-
-        public Video getVideo() {
-            return video;
-        }
-
-        public Link getLink() {
-            return link;
-        }
-
-        public String getType() {
-            return type;
-        }
     }
 
     public static class File {
@@ -312,18 +448,6 @@ public class MessagePayload {
 
     public static class Mentions {
 
-        public static class Links {
-            private String self;
-
-            public Links(String self) {
-                this.self = self;
-            }
-
-            public String getSelf() {
-                return self;
-            }
-        }
-
         @SerializedName("mention_name")
         private String mentionName;
         private int id;
@@ -352,158 +476,17 @@ public class MessagePayload {
         public Links getLinks() {
             return links;
         }
-    }
 
+        public static class Links {
+            private String self;
 
-    private Object from;
-    @SerializedName("message_links")
-    private MessageLinks messageLinks;
-    private File file;
-    private Mentions mentions;
-    @SerializedName("message_format")
-    private String messageFormat;
-    private String color;
-    private String date;
-    private String id;
-    private String message;
-    private String type;
+            public Links(String self) {
+                this.self = self;
+            }
 
-
-    public MessagePayload(String from, String messageFormat, String color, String date, Mentions mentions, String message, String type, String id)
-    {
-        this.from=from;
-        this.color=color;
-        this.messageFormat=messageFormat;
-        this.date=date;
-        this.mentions=mentions;
-        this.message=message;
-        this.type=type;
-        this.id=id;
-    }
-
-
-    public MessagePayload(From from, MessageLinks messageLinks, File file, String date, Mentions mentions, String message, String type, String id)
-    {
-        this.from=from;
-        this.messageLinks=messageLinks;
-        this.file = file;
-        this.mentions = mentions;
-        this.message = message;
-        this.type = type;
-        this.id = id;
-        this.date = date;
-    }
-
-    public MessageType getMessageType() {
-
-        try {
-            String test = (String)this.from;
-        } catch (ClassCastException e)
-        {
-            return MessageType.FromUser;
+            public String getSelf() {
+                return self;
+            }
         }
-
-        return MessageType.FromAddOn;
-    }
-
-    private From buildFromObject(LinkedTreeMap<String,Object> from)
-    {
-       return new From(from.get("mention_name").toString(),
-                       ((Double)from.get("id")).intValue(),
-                       new From.Links(((LinkedTreeMap<String,Object>)from.get("links")).get("self").toString()),
-                       from.get("name").toString());
-    }
-
-    public From getFrom() {
-       if ( MessageType.FromAddOn.equals(getMessageType()) )
-       {
-            return null;
-       }
-
-        try {
-            LinkedTreeMap<String, Object> tree = (LinkedTreeMap<String, Object>) this.from;
-            return buildFromObject(tree);
-        } catch (ClassCastException e)
-        {
-
-        }
-
-        try {
-            return (From)from;
-        } catch (ClassCastException e)
-        {
-
-        }
-
-        throw new IllegalStateException("can't work out from type");
-    }
-
-    public String getFromName() {
-        if ( MessageType.FromAddOn.equals(getMessageType()) )
-        {
-            return (String)from;
-        }
-
-        try {
-            LinkedTreeMap<String, Object> tree = (LinkedTreeMap<String, Object>) this.from;
-            return buildFromObject(tree).getName();
-        } catch (ClassCastException e)
-        {
-
-        }
-
-        try {
-            From f = (From)from;
-            return f.getName();
-        } catch (ClassCastException e)
-        {
-
-        }
-
-        throw new IllegalStateException("can't work out from type");
-    }
-
-    public MessageLinks.TwitterUser getTwitterUser() {
-
-        if (MessageType.FromAddOn.equals(getMessageType()))
-            return null;
-
-        return this.messageLinks.getTwitterUser();
-    }
-
-    public MessageLinks getMessageLinks() {
-        return messageLinks;
-    }
-
-    public File getFile() {
-        return file;
-    }
-
-    public Mentions getMentions() {
-        return mentions;
-    }
-
-    public String getMessageFormat() {
-        return messageFormat;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public String getType() {
-        return type;
     }
 }
