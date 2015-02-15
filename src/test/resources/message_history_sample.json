@@ -1,0 +1,92 @@
+{
+  "items": [
+    {
+      "from": {
+        "mention_name": "@mentionName",
+        "id": 123,
+        "links": {
+          "self": "selffrom"
+        },
+        "name": "fullfrom"
+      },
+      "message_links": {
+        "twitter_user": {
+          "followers": 1,
+          "name": "lonery",
+          "profileImageUrl": "http://twit",
+          "screenName": "roney"
+        },
+        "url": "http://twitterurl",
+        "image": {
+          "image": "imgb64",
+          "name": "myimage.jpg"
+        },
+        "twitter_status": {
+          "name": "statusname",
+          "created": "statuscreated",
+          "text": "content",
+          "profileImageUrl": "http://statusurl",
+          "source": "src",
+          "screenName": "screenanme"
+        },
+        "video": {
+          "thumbnailUrl": "vidthumb",
+          "author": "author",
+          "views": 2,
+          "title": "myvid"
+        },
+        "link": {
+          "description": "linkdesk",
+          "title": "linktitle",
+          "headerText": "linkheader",
+          "linkText": "linktext",
+          "faviconUrl": "http://favicon",
+          "fullUrl": "http://linkurl"
+        },
+        "type": "yes"
+      },
+      "file": {
+        "url": "http://fileurl",
+        "thumb_url": "http://thumburl",
+        "name": "filename",
+        "size": 999
+      },
+      "date": "2014-11-01T15:19:20+00:00",
+      "mentions": {
+        "mention_name": "@mentionuser",
+        "id": 555,
+        "links": {
+          "self": "mentionself"
+        },
+        "name": "mention user"
+      },
+      "message": "MY MESSAGE STYLE 1",
+      "type": "test",
+      "id": "ABCDEF"
+    },
+    {
+      "from": "ninja",
+      "message_format": "html",
+      "color": "red",
+      "date": "2014-11-01T15:19:20+00:00",
+      "mentions": {
+        "mention_name": "@mention",
+        "id": 75,
+        "links": {
+          "self": "2self"
+        },
+        "name": "mention2"
+      },
+      "message": "hello world",
+      "type": "test2",
+      "id": "ABC"
+    }
+  ],
+  "startIndex": 0,
+  "maxResults": 100,
+  "links": {
+    "self": "self",
+    "prev": "prev",
+    "next": "next"
+  }
+}

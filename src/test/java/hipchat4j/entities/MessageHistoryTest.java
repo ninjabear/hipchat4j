@@ -52,4 +52,23 @@ public class MessageHistoryTest {
         assertEquals("prev", mh.getLinks().getPrev());
     }
 
+    @Test
+    public void testFromJson() throws Exception {
+        // i'm going to mix up the message types in this one
+        String json = IOUtils.toString(this.getClass().getResourceAsStream("/message_history_sample.json"));
+        MessageHistory mhs = JsonParser.getInstance().fromJson(json, MessageHistory.class);
+        assertNotNull(mhs);
+
+        assertEquals(100, mhs.getMaxResults());
+        assertEquals(0, mhs.getStartIndex());
+        assertNotNull(mhs.getLinks());
+        assertEquals("next", mhs.getLinks().getNext());
+        assertEquals("self", mhs.getLinks().getSelf());
+        assertEquals("prev", mhs.getLinks().getPrev());
+
+        assertEquals(2, mhs.getItems().size());
+        assertNotNull(mhs.getItems().get(0));
+        assertNotNull(mhs.getItems().get(1));
+    }
+
 }
