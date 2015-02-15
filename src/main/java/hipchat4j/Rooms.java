@@ -100,13 +100,48 @@ public class Rooms {
         connector.delete("/v2/room/"+room);
     }
 
+
     public void getRecentHistory(String room) {
-        throw new UnsupportedOperationException("TODO");
+        getRecentHistory(room, null, null);
     }
 
-    public void getHistory(String room)
+    public MessageHistory getRecentHistory(String room, Integer maxResults, String notBefore) {
+        String qry = "/v2/room/"+room+"/history/latest/";
+
+        if (maxResults!=null)
+            qry += "?max-results="+maxResults;
+
+        if (notBefore!=null)
+        {
+            if (maxResults!=null)
+            {
+                qry += "&not-before="+notBefore;
+            } else {
+                qry += "?not-before="+notBefore;
+            }
+
+        }
+
+        String resp = connector.get(qry);
+        return JsonParser.getInstance().fromJson(resp, MessageHistory.class);
+    }
+
+    public MessageHistory getHistory(String room)
     {
-        throw new UnsupportedOperationException("TODO");
+        return getHistory(room, null, null, null, true);
+    }
+
+    public MessageHistory getHistory(String room, String fromDate, Integer startIndex, Integer maxResults, boolean reverse)
+    {
+         int defaultedStartIndex = startIndex==null?0:startIndex,
+                 defaultedMaxResults = maxResults==null?100:maxResults;
+
+        String qry = "/v2/room/"+room+"/history/?start-index="+defaultedStartIndex+"&max-results="+defaultedMaxResults+"&reverse="+(reverse?"true":"false");
+
+        if (fromDate!=null)
+            qry += "&date="+fromDate;
+
+        return JsonParser.getInstance().fromJson(connector.get(qry), MessageHistory.class);
     }
 
     public MessagePayload getMessage(String room, String messageId)

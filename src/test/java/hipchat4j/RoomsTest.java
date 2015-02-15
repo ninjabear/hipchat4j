@@ -25,6 +25,8 @@ public class RoomsTest {
         cm.addResponseMapping("/v2/room/abc", "200", IOUtils.toString(this.getClass().getResourceAsStream("/room_full.json")));
         cm.addResponseMapping("/v2/room/123", "200", IOUtils.toString(this.getClass().getResourceAsStream("/room_full.json")));
         cm.addResponseMapping("/v2/room/something/history/else", "200", IOUtils.toString(this.getClass().getResourceAsStream("/message_style1.json")));
+        cm.addResponseMapping("/v2/room/room/history/latest", "200", IOUtils.toString(this.getClass().getResourceAsStream("/message_history_sample.json")));
+        cm.addResponseMapping("/v2/room/abc/history/?start-index=0&max-results=100&reverse=true", "200", IOUtils.toString(this.getClass().getResourceAsStream("/message_history_sample.json")));
     }
 
     @Test
@@ -149,12 +151,44 @@ public class RoomsTest {
 
     @Test
     public void testGetRecentHistory() throws Exception {
-        rooms.getRecentHistory("latest");
+        rooms.getRecentHistory("room");
+        assertEquals("/v2/room/room/history/latest/", cm.getLastGetRequest());
+        rooms.getRecentHistory("room", null, null);
+        assertEquals("/v2/room/room/history/latest/", cm.getLastGetRequest());
+
+        rooms.getRecentHistory("room", 99, null);
+        assertEquals("/v2/room/room/history/latest/?max-results=99", cm.getLastGetRequest());
+
+        rooms.getRecentHistory("room", null, "abc");
+        assertEquals("/v2/room/room/history/latest/?not-before=abc", cm.getLastGetRequest());
+
+        rooms.getRecentHistory("room", 99, "abc");
+        assertEquals("/v2/room/room/history/latest/?max-results=99&not-before=abc", cm.getLastGetRequest());
     }
 
     @Test
     public void testGetHistory() throws Exception {
-        rooms.getHistory("abc");
+        MessageHistory hist = rooms.getHistory("abc");
+        assertEquals("/v2/room/abc/history/?start-index=0&max-results=100&reverse=true", cm.getLastGetRequest());
+        assertNotNull(hist);
+
+        rooms.getHistory("abc", null, null, null, true);
+        assertEquals("/v2/room/abc/history/?start-index=0&max-results=100&reverse=true", cm.getLastGetRequest());
+
+        rooms.getHistory("abc", null, null, null, false);
+        assertEquals("/v2/room/abc/history/?start-index=0&max-results=100&reverse=false", cm.getLastGetRequest());
+
+        rooms.getHistory("abc", null, null, 999, true);
+        assertEquals("/v2/room/abc/history/?start-index=0&max-results=999&reverse=true", cm.getLastGetRequest());
+
+        rooms.getHistory("abc", null, 999, null, true);
+        assertEquals("/v2/room/abc/history/?start-index=999&max-results=100&reverse=true", cm.getLastGetRequest());
+
+        rooms.getHistory("abc", "isodatehere", null, null, true);
+        assertEquals("/v2/room/abc/history/?start-index=0&max-results=100&reverse=true&date=isodatehere", cm.getLastGetRequest());
+
+        rooms.getHistory("abc", "isodatehere", 23, 55, false);
+        assertEquals("/v2/room/abc/history/?start-index=23&max-results=55&reverse=false&date=isodatehere", cm.getLastGetRequest());
     }
 
     @Test
