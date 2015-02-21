@@ -138,4 +138,19 @@ public class Rooms {
         return payload;
     }
 
+
+    public void inviteUserToRoom(String room, String user)
+    {
+        inviteUserToRoom(room, user, "");
+    }
+
+
+    public void inviteUserToRoom(String room, String user, String reason)
+    {
+        InviteToRoomRequest req = new InviteToRoomRequest(reason);
+        String json = JsonParser.getInstance().toJson(req);
+
+        connector.post("/v2/room/"+room+"/invite/"+user, json);
+    }
+
 }

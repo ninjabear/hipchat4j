@@ -194,4 +194,17 @@ public class RoomsTest {
         assertEquals("/v2/room/something/history/else", cm.getLastGetRequest());
         assertNotNull(payload);
     }
+
+    @Test
+    public void testInviteUserToRoom() throws Exception {
+        rooms.inviteUserToRoom("cool", "ninja", "please");
+        assertEquals("/v2/room/cool/invite/ninja", cm.getLastPostRequest());
+        InviteToRoomRequest sent = JsonParser.getInstance().fromJson(cm.getLastPostParam(), InviteToRoomRequest.class);
+        assertEquals("please", sent.getReason());
+
+        rooms.inviteUserToRoom("cool", "ninjab");
+        assertEquals("/v2/room/cool/invite/ninjab", cm.getLastPostRequest());
+        InviteToRoomRequest sentNoReason = JsonParser.getInstance().fromJson(cm.getLastPostParam(), InviteToRoomRequest.class);
+        assertEquals("", sentNoReason.getReason());
+    }
 }
