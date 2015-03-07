@@ -223,4 +223,10 @@ public class Rooms {
         return JsonParser.getInstance().fromJson(resp, RoomStatistics.class);
     }
 
+
+    public void setTopic(String room, String newTopic)
+    {
+        connector.put("/v2/room/"+room+"/topic", JsonParser.getInstance().toJson(new TopicChangeRequest(newTopic)));
+    }
+
 }

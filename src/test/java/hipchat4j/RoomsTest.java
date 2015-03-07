@@ -298,5 +298,12 @@ public class RoomsTest {
         assertEquals("/v2/room/myroom/statistics", cm.getLastGetRequest());
     }
 
+    @Test
+    public void testSetTopic() throws Exception {
+        rooms.setTopic("arm", "where's the leg");
+        assertEquals("/v2/room/arm/topic", cm.getLastPutRequest());
+        assertEquals("where's the leg", JsonParser.getInstance().fromJson(cm.getLastPutParam(), TopicChangeRequest.class).getTopic());
+    }
+
 
 }
