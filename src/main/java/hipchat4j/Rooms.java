@@ -3,6 +3,7 @@ package hipchat4j;
 import hipchat4j.connector.ConnectorAbstract;
 import hipchat4j.entities.*;
 import hipchat4j.json.JsonParser;
+import jdk.nashorn.internal.parser.JSONParser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -175,6 +176,15 @@ public class Rooms {
         String resp = connector.get("/v2/room/"+room+"/member?start-index="+startIndex+"&max-results="+maxResults);
         UserListPage ulp = JsonParser.getInstance().fromJson(resp, UserListPage.class);
         return ulp;
+    }
+
+    public void sendRoomNotification(String room, String color, String message, boolean notify, String messageFormat)
+    {
+        if (messageFormat==null)
+            messageFormat="html";
+
+        NotificationRequest nr = new NotificationRequest(color, message, notify, messageFormat);
+        connector.post("/v2/room/"+room+"/notification", JsonParser.getInstance().toJson(nr));
     }
 
 }
