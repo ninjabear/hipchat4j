@@ -6,7 +6,62 @@ package hipchat4j.entities;
  */
 public class Webhook {
 
-    private Room room;
+    public static class RoomInfo {
+        private int id;
+
+        public static class Links {
+            private String self,
+                           webhooks,
+                           members,
+                           participants;
+
+            public Links(String self, String webhooks, String members, String participants) {
+                this.self = self;
+                this.webhooks = webhooks;
+                this.members = members;
+                this.participants = participants;
+            }
+
+            public String getSelf() {
+                return self;
+            }
+
+            public String getWebhooks() {
+                return webhooks;
+            }
+
+            public String getMembers() {
+                return members;
+            }
+
+            public String getParticipants() {
+                return participants;
+            }
+        }
+
+        private Links links;
+        private String name;
+
+        public RoomInfo(int id, Links links, String name) {
+            this.id = id;
+            this.links = links;
+            this.name = name;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public Links getLinks() {
+            return links;
+        }
+
+        public String getName() {
+            return name;
+        }
+    }
+
+    private RoomInfo room;
     private User creator;
 
     private String url;
@@ -15,7 +70,7 @@ public class Webhook {
     private String event;
     private String name;
 
-    public Webhook(Room room, User creator, String url, String pattern, String created, String event, String name) {
+    public Webhook(RoomInfo room, User creator, String url, String pattern, String created, String event, String name) {
         this.room = room;
         this.creator = creator;
         this.url = url;
@@ -25,7 +80,7 @@ public class Webhook {
         this.name = name;
     }
 
-    public Room getRoom() {
+    public RoomInfo getRoom() {
         return room;
     }
 

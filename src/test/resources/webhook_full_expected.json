@@ -1,0 +1,28 @@
+{
+  "room": {
+    "id": 999,
+    "links": {
+      "self": "self",
+      "webhooks": "webhooks",
+      "members": "members",
+      "participants": "participants"
+    },
+    "name": "aroom"
+  },
+  "links": {
+    "self": "blap"
+  },
+  "creator": {
+    "mention_name": "mention_name",
+    "id": 123,
+    "links": {
+      "self": "selflink"
+    },
+    "name": "nom"
+  },
+  "url": "http://yes",
+  "pattern": ".*",
+  "created": "vader",
+  "event": "room_enter",
+  "name": "my hooks"
+}
