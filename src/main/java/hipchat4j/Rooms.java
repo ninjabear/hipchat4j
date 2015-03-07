@@ -229,4 +229,10 @@ public class Rooms {
         connector.put("/v2/room/"+room+"/topic", JsonParser.getInstance().toJson(new TopicChangeRequest(newTopic)));
     }
 
+    public Webhook getWebhook(String room, String hookId)
+    {
+        String json = connector.get("/v2/room/"+room+"/webhook/"+hookId);
+        return JsonParser.getInstance().fromJson(json, Webhook.class);
+    }
+
 }

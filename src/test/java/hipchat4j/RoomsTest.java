@@ -305,5 +305,11 @@ public class RoomsTest {
         assertEquals("where's the leg", JsonParser.getInstance().fromJson(cm.getLastPutParam(), TopicChangeRequest.class).getTopic());
     }
 
+    @Test
+    public void testGetWebhook() throws Exception {
+        Webhook h = rooms.getWebhook("myroom", "123");
+        assertEquals("/v2/room/myroom/webhook/123", cm.getLastGetRequest());
+    }
+
 
 }
