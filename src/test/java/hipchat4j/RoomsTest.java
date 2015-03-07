@@ -214,4 +214,11 @@ public class RoomsTest {
         assertEquals("/v2/room/aroom/member/auser", cm.getLastPutRequest());
         assertNull(cm.getLastPutParam());
     }
+
+    @Test
+    public void testDeleteMemberFromRoom() throws Exception {
+        rooms.deleteMemberFromRoom("aroom", "auser");
+        assertEquals("/v2/room/aroom/member/auser", cm.getLastDeleteRequest());
+    }
+
 }

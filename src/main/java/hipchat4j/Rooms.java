@@ -158,4 +158,9 @@ public class Rooms {
         connector.put("/v2/room/"+room+"/member/"+user, null);
     }
 
+    public void deleteMemberFromRoom(String room, String user)
+    {
+        connector.delete("/v2/room/"+room+"/member/"+user);
+    }
+
 }
