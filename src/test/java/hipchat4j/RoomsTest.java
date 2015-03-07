@@ -8,6 +8,7 @@ import org.apache.commons.io.IOUtils;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.File;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -261,6 +262,25 @@ public class RoomsTest {
         assertNotNull(r);
         assertEquals("124", r.getParentMessageId());
         assertEquals("hah", r.getMessage());
+    }
+
+    @Test
+    public void testShareFile() throws Exception {
+        File in = new File("./src/test/resources/capabilities.json");
+        rooms.shareFile("myroom", "cool file", in);
+        assertEquals("/v2/room/myroom/share/file", cm.getLastPostRequest());
+        assertEquals(in, cm.getLastPostAttachment());
+        assertEquals("cool file", JsonParser.getInstance().fromJson(cm.getLastPostParam(), FileShareMessageRequest.class).getMessage());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testShareFileInvalid() throws Exception {
+        rooms.shareFile("myroom", "cool file", null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testShareFileCantRead() throws Exception {
+        rooms.shareFile("myroom", "cool file", new File("awsrikfjhsk;djfhbaskdf"));
     }
 
 
