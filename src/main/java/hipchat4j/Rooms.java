@@ -217,4 +217,10 @@ public class Rooms {
         connector.post("/v2/room/"+room+"/share/link", JsonParser.getInstance().toJson(new LinkShareRequest(message, link)));
     }
 
+    public RoomStatistics getRoomStatistics(String room)
+    {
+        String resp = connector.get("/v2/room/"+room+"/statistics");
+        return JsonParser.getInstance().fromJson(resp, RoomStatistics.class);
+    }
+
 }

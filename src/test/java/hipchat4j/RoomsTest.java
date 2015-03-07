@@ -292,5 +292,11 @@ public class RoomsTest {
         assertEquals("http://dumbledoop.co.uk", lsr.getLink());
     }
 
+    @Test
+    public void testRoomStatistics() throws Exception {
+        rooms.getRoomStatistics("myroom");
+        assertEquals("/v2/room/myroom/statistics", cm.getLastGetRequest());
+    }
+
 
 }
