@@ -163,4 +163,18 @@ public class Rooms {
         connector.delete("/v2/room/"+room+"/member/"+user);
     }
 
+    public UserListPage getMembersInRoom(String room)
+    {
+        String resp = connector.get("/v2/room/"+room+"/member");
+        UserListPage ulp = JsonParser.getInstance().fromJson(resp, UserListPage.class);
+        return ulp;
+    }
+
+    public UserListPage getMembersInRoom(String room, int startIndex, int maxResults)
+    {
+        String resp = connector.get("/v2/room/"+room+"/member?start-index="+startIndex+"&max-results="+maxResults);
+        UserListPage ulp = JsonParser.getInstance().fromJson(resp, UserListPage.class);
+        return ulp;
+    }
+
 }

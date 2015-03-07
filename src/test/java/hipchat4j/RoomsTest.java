@@ -221,4 +221,14 @@ public class RoomsTest {
         assertEquals("/v2/room/aroom/member/auser", cm.getLastDeleteRequest());
     }
 
+
+    @Test
+    public void testGetRoomMembers() throws Exception {
+        rooms.getMembersInRoom("aroom");
+        assertEquals("/v2/room/aroom/member", cm.getLastGetRequest());
+
+        rooms.getMembersInRoom("aroom", 30, 1000);
+        assertEquals("/v2/room/aroom/member?start-index=30&max-results=1000", cm.getLastGetRequest());
+    }
+
 }
