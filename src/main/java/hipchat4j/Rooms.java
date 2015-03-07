@@ -153,4 +153,9 @@ public class Rooms {
         connector.post("/v2/room/"+room+"/invite/"+user, json);
     }
 
+    public void addMemberToRoom(String room, String user)
+    {
+        connector.put("/v2/room/"+room+"/member/"+user, null);
+    }
+
 }

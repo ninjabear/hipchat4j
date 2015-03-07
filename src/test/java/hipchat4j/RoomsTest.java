@@ -207,4 +207,11 @@ public class RoomsTest {
         InviteToRoomRequest sentNoReason = JsonParser.getInstance().fromJson(cm.getLastPostParam(), InviteToRoomRequest.class);
         assertEquals("", sentNoReason.getReason());
     }
+
+    @Test
+    public void testAddMemberToRoom() throws Exception {
+        rooms.addMemberToRoom("aroom","auser");
+        assertEquals("/v2/room/aroom/member/auser", cm.getLastPutRequest());
+        assertNull(cm.getLastPutParam());
+    }
 }
