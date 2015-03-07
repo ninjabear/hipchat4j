@@ -2,6 +2,7 @@ package hipchat4j.connector;
 
 import hipchat4j.config.Config;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +22,7 @@ public class ConnectorMock extends ConnectorAbstract {
     private List<String> putrequests = new ArrayList<>();
     private List<String> putparams = new ArrayList<>();
     private List<String> deleterequests = new ArrayList<>();
+    private List<File>  postRequestAttachments = new ArrayList<File>();
     private Map<String, Map<String, String>> responsemap = new HashMap<>();
 
     public ConnectorMock(Config config) {
@@ -45,6 +47,12 @@ public class ConnectorMock extends ConnectorAbstract {
         postrequests.add(requestPath);
         parammaps.add(params);
         return getMappedResponse(requestPath);
+    }
+
+    @Override
+    public String post(String requestPath, String params, File attach) {
+        postRequestAttachments.add(attach);
+        return post(requestPath, params);
     }
 
 
@@ -79,6 +87,8 @@ public class ConnectorMock extends ConnectorAbstract {
     public String getLastPostRequest() {
         return postrequests.get(postrequests.size() - 1);
     }
+
+    public File getLastPostAttachment() { return postRequestAttachments.get(postRequestAttachments.size() -1 ); }
 
     public String getLastPostParam() {
         return parammaps.get(parammaps.size() - 1);

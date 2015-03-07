@@ -187,4 +187,21 @@ public class Rooms {
         connector.post("/v2/room/"+room+"/notification", JsonParser.getInstance().toJson(nr));
     }
 
+    public UserListPage getRoomParticipants(String room)
+    {
+        return getRoomParticipants(room, false, 0, 100);
+    }
+
+    public UserListPage getRoomParticipants(String room, boolean includeOffline, int startIndex, int maxResults)
+    {
+        String resp = connector.get("/v2/room/"+room+"/participant?start-index="+startIndex+"&include-offline="+includeOffline+"&max-results="+maxResults);
+        return JsonParser.getInstance().fromJson(resp, UserListPage.class);
+    }
+
+    public void replyToMessage(String room, String inReplyTo, String message)
+    {
+        ReplyMessageRequest messageRequest = new ReplyMessageRequest(inReplyTo, message);
+        connector.post("/v2/room/"+room+"/reply", JsonParser.getInstance().toJson(messageRequest));
+    }
+
 }

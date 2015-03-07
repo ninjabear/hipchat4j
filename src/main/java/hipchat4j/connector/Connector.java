@@ -2,6 +2,8 @@ package hipchat4j.connector;
 
 import hipchat4j.config.Config;
 
+import java.io.File;
+
 /**
  * hipchat4j
  * 09/10/14/19:56
@@ -16,6 +18,11 @@ public class Connector extends ConnectorAbstract {
     @Override
     public String post(String requestPath, String params) {
         return "";
+    }
+
+    @Override
+    public String post(String requestPath, String params, File attach) {
+        return null;
     }
 
     @Override

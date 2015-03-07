@@ -232,7 +232,6 @@ public class RoomsTest {
 
     @Test
     public void testSendRoomNotification() throws Exception {
-
         rooms.sendRoomNotification("myroom", "red", "hello world", true, "html");
         assertEquals("/v2/room/myroom/notification", cm.getLastPostRequest());
         assertNotNull(cm.getLastPostParam());
@@ -244,7 +243,24 @@ public class RoomsTest {
         assertEquals(nr.getMessageFormat(), sentReq.getMessageFormat());
         assertEquals(nr.getColor(), sentReq.getColor());
         assertEquals(nr.isNotify(), sentReq.isNotify());
-        
+    }
+
+    @Test
+    public void testGetRoomParticipants() throws Exception {
+        rooms.getRoomParticipants("myroom");
+        assertEquals("/v2/room/myroom/participant?start-index=0&include-offline=false&max-results=100", cm.getLastGetRequest());
+        rooms.getRoomParticipants("myroom", true, 123, 456);
+        assertEquals("/v2/room/myroom/participant?start-index=123&include-offline=true&max-results=456", cm.getLastGetRequest());
+    }
+
+    @Test
+    public void testReplyToMessage() throws Exception {
+        rooms.replyToMessage("myroom", "124", "hah");
+        assertEquals("/v2/room/myroom/reply", cm.getLastPostRequest());
+        ReplyMessageRequest r = JsonParser.getInstance().fromJson(cm.getLastPostParam(), ReplyMessageRequest.class);
+        assertNotNull(r);
+        assertEquals("124", r.getParentMessageId());
+        assertEquals("hah", r.getMessage());
     }
 
 
