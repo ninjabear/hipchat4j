@@ -3,7 +3,6 @@ package hipchat4j;
 import hipchat4j.connector.ConnectorAbstract;
 import hipchat4j.entities.*;
 import hipchat4j.json.JsonParser;
-import jdk.nashorn.internal.parser.JSONParser;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -211,6 +210,11 @@ public class Rooms {
             throw new IllegalArgumentException("no file or cannot read file - cannot send");
 
         connector.post("/v2/room/"+room+"/share/file", JsonParser.getInstance().toJson(new FileShareMessageRequest(message)), file);
+    }
+
+    public void shareLink(String room, String message, String link)
+    {
+        connector.post("/v2/room/"+room+"/share/link", JsonParser.getInstance().toJson(new LinkShareRequest(message, link)));
     }
 
 }

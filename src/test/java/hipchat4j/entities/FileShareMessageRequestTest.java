@@ -1,5 +1,6 @@
-package hipchat4j;
+package hipchat4j.entities;
 
+import hipchat4j.entities.FileShareMessageRequest;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,6 +17,6 @@ public class FileShareMessageRequestTest {
 
     @Test
     public void testGetMessage() throws Exception {
-        assertEquals( "messagesss", m.getMessage() );
+        assertEquals("messagesss", m.getMessage());
     }
 }

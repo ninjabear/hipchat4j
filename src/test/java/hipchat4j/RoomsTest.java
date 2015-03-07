@@ -283,5 +283,14 @@ public class RoomsTest {
         rooms.shareFile("myroom", "cool file", new File("awsrikfjhsk;djfhbaskdf"));
     }
 
+    @Test
+    public void testShareLink() throws Exception {
+        rooms.shareLink("myroom", "cool link", "http://dumbledoop.co.uk");
+        assertEquals("/v2/room/myroom/share/link", cm.getLastPostRequest());
+        LinkShareRequest lsr = JsonParser.getInstance().fromJson(cm.getLastPostParam(), LinkShareRequest.class);
+        assertEquals("cool link", lsr.getMessage());
+        assertEquals("http://dumbledoop.co.uk", lsr.getLink());
+    }
+
 
 }

@@ -1,4 +1,4 @@
-package hipchat4j;
+package hipchat4j.entities;
 
 /**
  * hipchat4j / Ed
